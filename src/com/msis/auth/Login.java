@@ -28,10 +28,8 @@ public class Login extends HttpServlet{
 	//@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		String userType = "0";		
-		String type = "NULL";
-		type = userType;
+		String password = request.getParameter("password");	
+		String type = "0";
 		
 		try{			
 			// Establish Connection
@@ -50,95 +48,36 @@ public class Login extends HttpServlet{
 			
 			String dbEmail = "null";
 			String dbPassword = "null";
-			String dbType = "null";
+			String userType = "null";
 			
 			if(result.next()){
 				dbEmail = result.getString("email");
 				dbPassword = result.getString("password");
-				dbType = result.getString("type");
+				userType = result.getString("type");
 				
-				System.out.println(dbType);
+				System.out.println(userType);
 				System.out.println(email + password + type);
-				System.out.println(dbEmail + dbPassword + dbType);
-		        
-		        String Count = new String("1");
-		        
-		        if(dbType.equals(Count)){
-		        	PreparedStatement getUserFirst = conn.prepareStatement(" select * from test.clients where email=? and password=? and type=? ");
-		        	getUserFirst.setString(1,email);
-		        	getUserFirst.setString(2,password);
-		        	getUserFirst.setString(3,type);
-					
-					ResultSet getUserResult = getUserFirst.executeQuery();
-					String dbUserFirst;
-					
-					if(getUserResult.next()){
-						dbEmail = getUserResult.getString("email");
-						dbPassword = getUserResult.getString("password");
-						dbUserFirst = getUserResult.getString("first_name");
-						System.out.println(dbEmail + dbPassword + dbUserFirst);
-						
-						HttpSession session = request.getSession();
-				        session.setAttribute("email", dbEmail);
-				        session.setAttribute("password", dbPassword);
-				        session.setAttribute("userFirst", dbUserFirst);
-				        session.setMaxInactiveInterval(30*60); //session expires in 30 minutes
-				            
-				        Cookie userEmail = new Cookie("email", dbEmail);
-				        Cookie userPassword = new Cookie("password", dbPassword);
-				        Cookie userFirst = new Cookie("userFirst", dbUserFirst);
-				        userEmail.setMaxAge(30*60);
-				        userPassword.setMaxAge(30*60);
-				        userFirst.setMaxAge(30*60);
-				        response.addCookie(userEmail);
-				        response.addCookie(userPassword);
-				        response.addCookie(userFirst);
-						
-						RequestDispatcher requestDispatcher = request.getRequestDispatcher("home-client.jsp");
-			        	requestDispatcher.forward(request, response);
-					}
-				}
-		        
-		        else{
-		        	PreparedStatement getUserFirst = conn.prepareStatement(" select * from test.workers where email=? and password=? and type=? ");
-		        	getUserFirst.setString(1,email);
-		        	getUserFirst.setString(2,password);
-		        	getUserFirst.setString(3,type);
-					
-					ResultSet getUserResult = getUserFirst.executeQuery();
-					String dbUserFirst;
-					
-					if(getUserResult.next()){
-						dbEmail = getUserResult.getString("email");
-						dbPassword = getUserResult.getString("password");
-						dbUserFirst = getUserResult.getString("first_name");
-						System.out.println(dbEmail + dbPassword + dbUserFirst);
-						
-						HttpSession session = request.getSession();
-				        session.setAttribute("email", dbEmail);
-				        session.setAttribute("password", dbPassword);
-				        session.setAttribute("userFirst", dbUserFirst);
-				        session.setMaxInactiveInterval(30*60); //session expires in 30 minutes
-				            
-				        Cookie userEmail = new Cookie("email", dbEmail);
-				        Cookie userPassword = new Cookie("password", dbPassword);
-				        Cookie userFirst = new Cookie("userFirst", dbUserFirst);
-				        userEmail.setMaxAge(30*60);
-				        userPassword.setMaxAge(30*60);
-				        userFirst.setMaxAge(30*60);
-				        response.addCookie(userEmail);
-				        response.addCookie(userPassword);
-				        response.addCookie(userFirst);
-						
-						RequestDispatcher requestDispatcher = request.getRequestDispatcher("home-worker.jsp");
-			        	requestDispatcher.forward(request, response);
-					}
-		        }
+				System.out.println(dbEmail + dbPassword + userType);
+				
+				HttpSession session = request.getSession();
+		        session.setAttribute("email", dbEmail);
+		        session.setAttribute("password", dbPassword);
+		        session.setMaxInactiveInterval(30*60); //session expires in 30 minutes   
+		        Cookie userEmail = new Cookie("email", dbEmail);
+		        Cookie userPassword = new Cookie("password", dbPassword);
+		        userEmail.setMaxAge(30*60);
+		        userPassword.setMaxAge(30*60);
+		        response.addCookie(userEmail);
+		        response.addCookie(userPassword);
+				
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("dashboard.jsp");
+	        	requestDispatcher.forward(request, response);
+	        	System.out.println("i am here after");
 			}
 				     
 			else{
 				System.out.println("Mismatch");
-				System.out.println(dbEmail + dbPassword + dbType);
+				System.out.println(dbEmail + dbPassword + userType);
 				System.out.println(email + password + type);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
 	        	requestDispatcher.forward(request, response);

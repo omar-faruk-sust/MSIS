@@ -17,7 +17,7 @@
 	<body>
 		  <div class="wrapper">
 		    <form class="form-signin" method="post" action="Login">       
-		      <h2><a class="btn btn-lg btn-block" href="index.jsp" role="button">MSIS</a></h2>
+		      <h2><a class="btn btn-lg btn-block" href="#" role="button">MSIS</a></h2>
 		      <input type="text" class="form-control" name="email" placeholder="Email Address" required="true" autofocus="" />
 		      <input type="password" class="form-control" name="password" placeholder="Password" required="true"/>
 		      <br />
