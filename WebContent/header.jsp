@@ -13,15 +13,15 @@
 				<li class="dropdown user user-menu">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<img src="${pageContext.request.contextPath}/skins/adminLTE/dist/img/default-avatar.jpg" class="user-image" alt="User Image"/>
-						<span class="hidden-xs"></span>
+						<span class="hidden-xs"><%=(String)session.getAttribute("name")%></span>
 					</a>
 					<ul class="dropdown-menu">
 						<!-- User image -->
 						<li class="user-header">
 								<img src="${pageContext.request.contextPath}/skins/adminLTE/dist/img/default-avatar.jpg" class="img-circle" alt="User Image" />			
-
+								
 							<p>
-								<small>Member since </small>
+								<small><%=(String)session.getAttribute("email")%></small>
 							</p>
 						</li>
 						<!-- Menu Footer-->
@@ -30,7 +30,10 @@
 								<a href="" class="btn btn-default btn-flat">Profile</a>
 							</div>
 							<div class="pull-right">
-								<a href="" class="btn btn-default btn-flat">Sign out</a>
+								<!-- <a href="" class="btn btn-default btn-flat">Sign out</a> -->
+								<form method="post" action="Logout">
+						        	<input type="submit" value="Logout" class="btn btn-default btn-flat">
+						        </form>
 							</div>
 						</li>
 					</ul>

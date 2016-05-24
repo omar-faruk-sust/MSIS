@@ -30,6 +30,7 @@ public class Login extends HttpServlet{
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");	
 		String type = "0";
+		String name = "Test Test";
 		
 		try{			
 			// Establish Connection
@@ -62,6 +63,9 @@ public class Login extends HttpServlet{
 				HttpSession session = request.getSession();
 		        session.setAttribute("email", dbEmail);
 		        session.setAttribute("password", dbPassword);
+		        // for testing
+		        session.setAttribute("name", name);
+		        
 		        session.setMaxInactiveInterval(30*60); //session expires in 30 minutes   
 		        Cookie userEmail = new Cookie("email", dbEmail);
 		        Cookie userPassword = new Cookie("password", dbPassword);
@@ -72,7 +76,7 @@ public class Login extends HttpServlet{
 				
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("dashboard.jsp");
 	        	requestDispatcher.forward(request, response);
-	        	System.out.println("i am here after");
+	       
 			}
 				     
 			else{
