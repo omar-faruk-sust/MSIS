@@ -31,15 +31,17 @@ public class Login extends HttpServlet{
 	//@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");	
-	
-		String name = "Test Test";
+		String password = request.getParameter("password");
 		
 		try{			
 			// Establish Connection
-			DBConnection obj = new DBConnection();
+//			DBConnection obj = new DBConnection();
+//			Connection conn = null;
+//			conn = obj.DBConnect();
+			
+			MySQLAccess obj = new MySQLAccess();
 			Connection conn = null;
-			conn = obj.DBConnect();
+			conn = obj.getConnection();
 			
 			// SQL Query
 			PreparedStatement login = conn.prepareStatement(" select * from Student_information_system.users where email=? and password=?");
@@ -52,6 +54,8 @@ public class Login extends HttpServlet{
 			String dbEmail = "null";
 			String dbPassword = "null";
 			String type = "null";
+			String name = "null";
+			String userType = "null";
 			
 			if(result.next()){
 				dbEmail = result.getString("email");
@@ -62,20 +66,21 @@ public class Login extends HttpServlet{
 				System.out.println(dbEmail + dbPassword);
 				
 				if(type.equals("1")){
-					System.out.println("student");
-				Student student = this.selectStudent(dbEmail);
-				System.out.println(student);
+					Student student = this.selectStudent(dbEmail);
+					name = student.getFirst_name()+ " " + student.getLast_name();
+					userType = "student";
 				}else{
-					System.out.println("admin");
 					Admin admin = this.selectAdmin(dbEmail);
+					name = admin.getFirst_name()+ " " + admin.getLast_name();
+					userType = "admin";
 				}
 				
 				
 				HttpSession session = request.getSession();
 		        session.setAttribute("email", dbEmail);
 		        session.setAttribute("password", dbPassword);
-		        // for testing
 		        session.setAttribute("name", name);
+		        session.setAttribute("userType", userType);
 		        
 		        session.setMaxInactiveInterval(30*60); //session expires in 30 minutes   
 		        Cookie userEmail = new Cookie("email", dbEmail);
@@ -115,14 +120,8 @@ public class Login extends HttpServlet{
 		String sql = "select * from student where email=?";
 		
 		// Establish Connection
-		DBConnection obj = new DBConnection();
-		Connection connection = null;
-		try {
-			connection = obj.DBConnect();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		MySQLAccess obj = new MySQLAccess();
+		Connection connection = obj.getConnection();
 		
 		try {
 			PreparedStatement prepareStm = connection.prepareStatement(sql);
@@ -130,7 +129,6 @@ public class Login extends HttpServlet{
 			ResultSet results = prepareStm.executeQuery();
 			while(results.next()){
 				email = results.getString("email");
-				
 				int id = results.getInt("id");
 				String first_name = results.getString("first_name");
 				String last_name = results.getString("last_name");
@@ -141,9 +139,8 @@ public class Login extends HttpServlet{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			obj.DBDisconnect();
 		}
+		
 		return student;
 	}
 	
@@ -151,15 +148,9 @@ public class Login extends HttpServlet{
 		Admin admin = null;
 		String sql = "select * from admin where email=?";
 		
-		// Establish Connection
-		DBConnection obj = new DBConnection();
-		Connection connection = null;
-		try {
-			connection = obj.DBConnect();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		/// Establish Connection
+		MySQLAccess obj = new MySQLAccess();
+		Connection connection = obj.getConnection();
 		
 		try {
 			PreparedStatement prepareStm = connection.prepareStatement(sql);
@@ -178,9 +169,8 @@ public class Login extends HttpServlet{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			obj.DBDisconnect();
 		}
+		
 		return admin;
 	}
 	

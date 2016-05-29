@@ -31,7 +31,7 @@
                     <h3>
                         <%=(String)session.getAttribute("email")%>
                         <!-- condition impose -->
-                            <a href="#" class="btn btn-primary btn-sm pull-right"><i
+                            <a href="edit_profile.jsp" class="btn btn-primary btn-sm pull-right"><i
                                         class="fa fa-pencil-square-o"></i> Edit</a>
                   
                     </h3>
@@ -64,7 +64,7 @@
 				                <th>Description</th>
 				            </tr> 
 			                <tr>
-			                    <td>Student</td>
+			                    <td><%=(String)session.getAttribute("userType")%></td>
 			                </tr>
 				        </table>
 				    </div>
