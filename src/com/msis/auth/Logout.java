@@ -43,7 +43,7 @@ public class Logout extends HttpServlet {
             session.invalidate();
         }
         //no encoding because we have invalidated the session
-        response.sendRedirect("Login.jsp");
+        response.sendRedirect("login.jsp");
 	}
 
 }

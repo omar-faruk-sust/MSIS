@@ -2,6 +2,8 @@ package com.msis.auth;
 import com.msis.DBConnection.*;
 import com.msis.DTO.Admin;
 import com.msis.DTO.Student;
+import com.msis.model.AdminModel;
+import com.msis.model.StudentModel;
 
 import java.sql.*;
 import java.sql.Connection;
@@ -33,11 +35,7 @@ public class Login extends HttpServlet{
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		try{			
-			// Establish Connection
-//			DBConnection obj = new DBConnection();
-//			Connection conn = null;
-//			conn = obj.DBConnect();
+		try{
 			
 			MySQLAccess obj = new MySQLAccess();
 			Connection conn = null;
@@ -56,7 +54,7 @@ public class Login extends HttpServlet{
 			String type = "null";
 			String name = "null";
 			String userType = "null";
-			
+			//String errorMsg = "null";
 			if(result.next()){
 				dbEmail = result.getString("email");
 				dbPassword = result.getString("password");
@@ -66,15 +64,16 @@ public class Login extends HttpServlet{
 				System.out.println(dbEmail + dbPassword);
 				
 				if(type.equals("1")){
-					Student student = this.selectStudent(dbEmail);
+					StudentModel studentModel = new StudentModel();
+					Student student = studentModel.selectStudent(dbEmail);
 					name = student.getFirst_name()+ " " + student.getLast_name();
 					userType = "student";
 				}else{
-					Admin admin = this.selectAdmin(dbEmail);
+					AdminModel adminModel = new AdminModel();
+					Admin admin = adminModel.selectAdmin(dbEmail);
 					name = admin.getFirst_name()+ " " + admin.getLast_name();
 					userType = "admin";
 				}
-				
 				
 				HttpSession session = request.getSession();
 		        session.setAttribute("email", dbEmail);
@@ -93,13 +92,12 @@ public class Login extends HttpServlet{
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("dashboard.jsp");
 	        	requestDispatcher.forward(request, response);
 	       
-			}
-				     
-			else{
+			}else{
 				System.out.println("Mismatch");
 				System.out.println(dbEmail + dbPassword);
 				System.out.println(email + password);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
+				request.setAttribute("errorMsg", "You email or password does not match.");
 	        	requestDispatcher.forward(request, response);
 			}
 		}
@@ -114,65 +112,5 @@ public class Login extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		doGet(request, response);
 	}
-	
-	public Student selectStudent(String email) {
-		Student student = null;
-		String sql = "select * from student where email=?";
-		
-		// Establish Connection
-		MySQLAccess obj = new MySQLAccess();
-		Connection connection = obj.getConnection();
-		
-		try {
-			PreparedStatement prepareStm = connection.prepareStatement(sql);
-			prepareStm.setString(1, email);
-			ResultSet results = prepareStm.executeQuery();
-			while(results.next()){
-				email = results.getString("email");
-				int id = results.getInt("id");
-				String first_name = results.getString("first_name");
-				String last_name = results.getString("last_name");
-				String mobile = results.getString("mobile");
-				String address = results.getString("address");
-	
-				student = new Student(id, first_name, last_name, email,mobile, address);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return student;
-	}
-	
-	public Admin selectAdmin(String email) {
-		Admin admin = null;
-		String sql = "select * from admin where email=?";
-		
-		/// Establish Connection
-		MySQLAccess obj = new MySQLAccess();
-		Connection connection = obj.getConnection();
-		
-		try {
-			PreparedStatement prepareStm = connection.prepareStatement(sql);
-			prepareStm.setString(1, email);
-			ResultSet results = prepareStm.executeQuery();
-			while(results.next()){
-				email = results.getString("email");
-				
-				int id = results.getInt("id");
-				String first_name = results.getString("first_name");
-				String last_name = results.getString("last_name");
-				String address = results.getString("address");
-				int emp_id = results.getInt("emp_id");
-	
-				admin = new Admin(id, first_name, last_name, email, emp_id, address);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return admin;
-	}
-	
 	
 }

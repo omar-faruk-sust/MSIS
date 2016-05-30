@@ -2,13 +2,7 @@ package com.msis.DBConnection;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mysql.jdbc.Connection;
-//import com.mysql.jdbc.PreparedStatement;
-import java.sql.PreparedStatement; // not the sql one
-import java.sql.ResultSet;
 
 public class MySQLAccess {
 	
