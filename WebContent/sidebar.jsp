@@ -27,17 +27,29 @@
 					<i class="fa fa-angle-left pull-right"></i>
 				</a>
 				<ul class="treeview-menu">
-		            <li><a href="#"><i class="fa fa-circle-o"></i> Add Course</a></li>
-		            <li><a href="#"><i class="fa fa-circle-o"></i> Edit</a></li>
+		            <li><a href="#"><i class="fa fa fa-file-o"></i> Add Course</a></li>
+		            <li><a href="#"><i class="fa fa fa-file-o"></i> Search Course</a></li>
 		         </ul>
 			</li>
 
 			
-			<li>
+			<li class="treeview">
 				<a href="#">
-					<i class="fa fa-users"></i> <span>Users</span>
+					<i class="fa fa-book"></i> <span>Grade</span>
+					<i class="fa fa-angle-left pull-right"></i>
+				</a>
+				<ul class="treeview-menu">
+		            <li><a href="#"><i class="fa fa-book"></i>Cumulative GPA</a></li>
+		            <li><a href="#"><i class="fa fa-book"></i>View Grade</a></li>
+		         </ul>
+			</li>
+			
+			<li>
+				<a href="payment.jsp">
+					<i class="fa-cc-visa"></i> <span>Payment</span>
 				</a>
 			</li>
+			
 		</ul>
 	</section>
 	<!-- /.sidebar -->
