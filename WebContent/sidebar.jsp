@@ -27,9 +27,10 @@
 					<i class="fa fa-angle-left pull-right"></i>
 				</a>
 				<ul class="treeview-menu">
-		            <li><a href="#"><i class="fa fa fa-file-o"></i> Add Course</a></li>
-		            <li><a href="#"><i class="fa fa fa-file-o"></i> Search Course</a></li>
-		         </ul>
+		            		<li class="active"><a href="searchCourse.jsp"><i class="fa fa-circle-o"></i> Search Course</a></li>
+            				<li><a href="#"><i class="fa fa-circle-o"></i> Add Course</a></li>
+            				<li><a href="#"><i class="fa fa-circle-o"></i> Drop Course</a></li>
+		         	</ul>
 			</li>
 
 			
