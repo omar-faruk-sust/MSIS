@@ -50,6 +50,7 @@ public class Login extends HttpServlet{
 			ResultSet result = login.executeQuery();
 			
 			String dbEmail = "null";
+			int userId;
 			String dbPassword = "null";
 			String type = "null";
 			String name = "null";
@@ -59,7 +60,7 @@ public class Login extends HttpServlet{
 				dbEmail = result.getString("email");
 				dbPassword = result.getString("password");
 				type = result.getString("type");
-				
+			
 				System.out.println(email + password);
 				System.out.println(dbEmail + dbPassword);
 				
@@ -68,11 +69,13 @@ public class Login extends HttpServlet{
 					Student student = studentModel.selectStudent(dbEmail);
 					name = student.getFirst_name()+ " " + student.getLast_name();
 					userType = "student";
+					userId = student.getId();
 				}else{
 					AdminModel adminModel = new AdminModel();
 					Admin admin = adminModel.selectAdmin(dbEmail);
 					name = admin.getFirst_name()+ " " + admin.getLast_name();
 					userType = "admin";
+					userId = admin.getId();
 				}
 				
 				HttpSession session = request.getSession();
@@ -80,6 +83,7 @@ public class Login extends HttpServlet{
 		        session.setAttribute("password", dbPassword);
 		        session.setAttribute("name", name);
 		        session.setAttribute("userType", userType);
+		        session.setAttribute("userId", userId);
 		        
 		        session.setMaxInactiveInterval(30*60); //session expires in 30 minutes   
 		        Cookie userEmail = new Cookie("email", dbEmail);

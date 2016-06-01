@@ -1,6 +1,14 @@
+<%@page import="com.msis.DTO.PaymentDue"%>
+<%@page import="com.msis.model.DueAmountModel"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*"%>
 
+<% 
+	MySQLAccess dbConnection = new MySQLAccess();
+	DueAmountModel dueAmount = new DueAmountModel();
+	int studentId = (Integer) session.getAttribute("userId");
+	PaymentDue paymentDue = dueAmount.totalDueAmount(studentId);
+%>
 
 <jsp:include page="pre-header.jsp" />
 
@@ -38,7 +46,26 @@
 									
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h4 class="panel-title">Student Information</h4>
+											<h4 class="panel-title">Account Summary</h4>
+										</div>
+
+										<div class="form-group" style="padding-top: 25px;">
+											<label for="avatar" class="col-md-4 control-label">Present Due</label>
+											<div class="col-md-6">
+												<%= paymentDue.getDue_amount() %>
+											</div>
+										</div>
+										<div class="form-group" style="padding-top: 25px;">
+											<label for="avatar" class="col-md-4 control-label">Future Due</label>
+											<div class="col-md-6">
+												<%= paymentDue.getDue_amount() %>
+											</div>
+										</div>
+									</div>
+									
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">Payment Section</h4>
 										</div>
 
 										<div class="form-group" style="padding-top: 10px;">
