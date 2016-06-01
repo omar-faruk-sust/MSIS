@@ -43,19 +43,19 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Sourch Course</li>
-            </ol>
-            
-            <% 
+                <li class="active">Search Course</li>
+            </ol>         			
+        </section> <!-- end of pre-header -->
+        <!-- Main content -->
+        <section class="content">
+        
+        		<% 
          		ArrayList rows = new ArrayList();
          		if (request.getAttribute("courseList") != null){
              	rows = (ArrayList) request.getAttribute("courseList");
          		}
-         	%>         			
-         			
-        </section> <!-- end of pre-header -->
-        <!-- Main content -->
-        <section class="content">
+         		%>
+        
         <div class="box">            
             <div class="box-body">
               <div class="dataTables_wrapper form-inline dt-bootstrap" id="example2_wrapper">	  
@@ -67,14 +67,17 @@
 	                <tbody>
 	                <c:forEach items="${courseInfo[4]}" var="course">
 		                <tr role="row">
-		                	<td colspan="4"><b>${course}</b></td> 	                	               
+		                	<td colspan="7" bgcolor="#E6E6E6"><b>${course}</b></td> 	                	               
 		                </tr>
 		            </c:forEach> 	            
 		            <tr role="row">
 			            <th>Instructor</th>
 			            <th>Day Time</th>
 			            <th>Location</th>
+			            <th>Meeting Date</th>
 			            <th>Term</th>
+			            <th>Status</th>
+			            <th>Add Course</th>
 		            </tr>
 		            <tr role="row">
 			            <c:forEach items="${courseInfo[1]}" var="instructor">
@@ -86,9 +89,18 @@
 			            <c:forEach items="${courseInfo[3]}" var="location">
 			                	<td>${location}</td> 	         
 			            </c:forEach>  
+			            <c:forEach items="${courseInfo[6]}" var="meeting">
+			                	<td>${meeting}</td> 	         
+			            </c:forEach> 
 			            <c:forEach items="${courseInfo[0]}" var="term">
 			                	<td>${term}</td> 	         
-			            </c:forEach>     	               
+			            </c:forEach>
+			            <c:forEach items="${courseInfo[5]}" var="status">
+			                	<td>${status}</td> 	         
+			            </c:forEach> 
+			            <td>
+                    		<button type="button" class="btn btn-block btn-success">Select</button>
+                 		</td>    	               
 		            </tr>
 	                </tbody>                
 	              </table>
