@@ -22,11 +22,20 @@
 
 <body>	
 	<div class="wrapper">
-		<form class="form-signin" method="post" action="Login">
+		<form class="form-signin" method="POST" action="Login">
 			<h2>
 				<a class="btn btn-lg btn-block" href="#" role="button">MSIS</a>
 			</h2>
+			
+			<%
+			  if (session.getAttribute("email") != null)
+			  {
+			    %><jsp:forward page="dashboard.jsp" /><%
+			  }
+			%>
+			
 			<% 
+			
 			String str = (String) request.getAttribute("errorMsg");
 			if( str != null && !str.isEmpty()) 
 			
@@ -35,7 +44,7 @@
 				<%= request.getAttribute("errorMsg") %>
 			</div>
 			<% } %>
-			<input type="text" class="form-control" name="email"
+			<input type="email" class="form-control" name="email"
 				placeholder="Email Address" required="true" autofocus="" /> <input
 				type="password" class="form-control" name="password"
 				placeholder="Password" required="true" /> <br />

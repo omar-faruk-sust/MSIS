@@ -7,6 +7,9 @@
     </footer>
 </div><!-- ./wrapper -->
 
+<!-- custom JS for our project -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/project.js"></script>
+
 <!-- jQuery 2.1.3 -->
 <script src="${pageContext.request.contextPath}/skins/adminLTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- jQuery UI 1.11.2 -->

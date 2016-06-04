@@ -88,10 +88,14 @@ public class Login extends HttpServlet{
 		        session.setMaxInactiveInterval(30*60); //session expires in 30 minutes   
 		        Cookie userEmail = new Cookie("email", dbEmail);
 		        Cookie userPassword = new Cookie("password", dbPassword);
+		        Cookie UType = new Cookie("userType", userType);
+		        Cookie UName = new Cookie("name", name);
 		        userEmail.setMaxAge(30*60);
 		        userPassword.setMaxAge(30*60);
 		        response.addCookie(userEmail);
 		        response.addCookie(userPassword);
+		        response.addCookie(UType);
+		        response.addCookie(UName);
 				
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("dashboard.jsp");
 	        	requestDispatcher.forward(request, response);

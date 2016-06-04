@@ -26,8 +26,6 @@ public class EditProfile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request);
-		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -35,8 +33,12 @@ public class EditProfile extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String firstName = request.getParameter("first_name");
+		String lastName = request.getParameter("last_name");
+		String email = request.getParameter("email");
+		String mobile = request.getParameter("mobile");
+		String type = request.getParameter("user_type");
+		System.out.println(firstName + lastName + email + mobile + type + " Post");
 	}
 
 }

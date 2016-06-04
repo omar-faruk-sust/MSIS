@@ -1,19 +1,33 @@
-$(document).ready(function(){
-	$.ajax({
-        type: "GET",
-        url: 'EditProject',
-        data : {
-        	"project_id" :$("#project_id").val() 
-        },
-        success: function(response){
-        	
-        	$("#project_name").val(response.projectName);
-        	$("#project_description").val(response.projectDescription);
-        	$("#project_skill").val(response.skill);
-        	$("#project_availability").val(response.availability);
-        	$("#project_location").val(response.location);
-        	$("#project_rate").val(response.rate);
-        	
-        }
-        });
-     });
+(function($, document, window){
+
+	$(document).ready(function() {
+		//validateNumberAllowDecimal=function(event, isDecimal) {
+		function validateNumberAllowDecimal(event, isDecimal) {
+	    	alert(' i am here');
+	        var keysWithDecimal;
+	        if (isDecimal) {
+	            // keycode 190 dot (.) without number pad
+	            // keycode 110 dot (.) on number pad
+	            keysWithDecimal = [46,8,9,27,13,190,110];
+	        } else {
+	            keysWithDecimal = [46,8,9,27,13];
+	        }
+
+	        // Allow: backspace, delete, tab, escape, enter and .
+	        if ($.inArray(event.keyCode, keysWithDecimal) !== -1 ||
+	            // Allow: Ctrl+A
+	            (event.keyCode == 65 && event.ctrlKey === true) ||
+	            // Allow: home, end, left, right
+	            (event.keyCode >= 35 && event.keyCode <= 39)) {
+	            // let it happen, don't do anything
+	            return;
+	        } else {
+	            // Ensure that it is a number and stop the keypress
+	            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+	                event.preventDefault();
+	            }
+	        }
+	    }
+	});
+
+})(jQuery, document, window);

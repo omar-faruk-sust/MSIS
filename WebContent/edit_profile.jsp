@@ -54,6 +54,7 @@
 
 										<div class="form-group" style="padding-top: 10px;">
 											<label for="first_name" class="col-md-4 control-label">First Name</label>
+											<input type="hidden" name="user_type" value="<%= (String) session.getAttribute("userType")%>">
 											<div class="col-md-6">
 												<input class="form-control" required="required" name="first_name"
 													type="text" value="<%= student.getFirst_name()%>" id="first_name">

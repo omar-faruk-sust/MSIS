@@ -41,7 +41,7 @@
 				</a>
 				<ul class="treeview-menu">
 		            <li><a href="#"><i class="fa fa-book"></i>Cumulative GPA</a></li>
-		            <li><a href="#"><i class="fa fa-book"></i>View Grade</a></li>
+		            <li><a href="view_grade.jsp"><i class="fa fa-book"></i>View Grade</a></li>
 		         </ul>
 			</li>
 			

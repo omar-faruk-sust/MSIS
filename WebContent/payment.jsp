@@ -1,13 +1,27 @@
+<%@page import="com.msis.servlet.Payment"%>
+<%@page import="com.msis.DTO.StudentPayment"%>
 <%@page import="com.msis.DTO.PaymentDue"%>
 <%@page import="com.msis.model.DueAmountModel"%>
+<%@page import="com.msis.model.PaymentModel"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*"%>
+<%
+	//String emailAtt = null; String userType = null;
+	//if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		//response.sendRedirect("login.jsp");
+	//}
+%>
 
-<% 
+<%
 	MySQLAccess dbConnection = new MySQLAccess();
+	// due model class
 	DueAmountModel dueAmount = new DueAmountModel();
-	int studentId = (Integer) session.getAttribute("userId");
+	// paid model class
+	PaymentModel paidAmount = new PaymentModel();
+	int studentId = (Integer)session.getAttribute("userId");
+	//Integer studentId = Integer.parseInt((String)session.getAttribute("userId"));
 	PaymentDue paymentDue = dueAmount.totalDueAmount(studentId);
+	StudentPayment alredyPaid = paidAmount.totalPaidAmount(studentId);
 %>
 
 <jsp:include page="pre-header.jsp" />
@@ -39,10 +53,9 @@
 								</h3>
 							</div>
 							<div class="box-body">
-								<form method="POST"
-									action="EditProfile"
-									accept-charset="UTF-8" class="form-horizontal" role="form"
-									enctype="multipart/form-data">
+								<!-- include the error messgae handler -->
+								<jsp:include page="error-success.jsp" />
+								<form method="POST" action="Payment" accept-charset="UTF-8" class="form-horizontal" role="form">
 									
 									<div class="panel panel-default">
 										<div class="panel-heading">
@@ -50,42 +63,41 @@
 										</div>
 
 										<div class="form-group" style="padding-top: 25px;">
-											<label for="avatar" class="col-md-4 control-label">Present Due</label>
+											<label for="avatar" class="col-md-4 control-label">Total Amount</label>
 											<div class="col-md-6">
 												<%= paymentDue.getDue_amount() %>
 											</div>
 										</div>
 										<div class="form-group" style="padding-top: 25px;">
-											<label for="avatar" class="col-md-4 control-label">Future Due</label>
+											<label for="avatar" class="col-md-4 control-label">Total Paid Amount</label>
 											<div class="col-md-6">
-												<%= paymentDue.getDue_amount() %>
+												<%= alredyPaid.getPaid_amount() %>
 											</div>
 										</div>
+										
+										<div class="form-group" style="padding-top: 25px;">
+											<label for="avatar" class="col-md-4 control-label">Total Due Amount</label>
+											<div class="col-md-6">
+												<%= paymentDue.getDue_amount() - alredyPaid.getPaid_amount() %>
+											</div>
+										</div>
+										
 									</div>
 									
 									<div class="panel panel-default">
 										<div class="panel-heading">
 											<h4 class="panel-title">Payment Section</h4>
 										</div>
+										
+										<input type="hidden" name="student_id" value="<%= studentId %>" />
 
-										<div class="form-group" style="padding-top: 10px;">
-											<label for="student_email" class="col-md-4 control-label">Student Email</label>
-											<div class="col-md-6">
-												<input class="form-control" required="required" name="student_email"
-													type="text" value="" id="student_email">
-											</div>
-										</div>
-
-										<div class="form-group">
+										<div class="form-group" style="padding-top: 25px;">
 											<label for="amount" class="col-md-4 control-label">Payment Amount</label>
 											<div class="col-md-6">
 												<input class="form-control" required="required" name="amount"
-													type="text" value="" id="amount">
+													type="number" min="1" value="" id="amount">
 											</div>
-										</div>
-										
-										
-										
+										</div>									
 									</div>
 
 									<div class="form-group">
@@ -105,5 +117,7 @@
 		</div>
 	</div>
 	<!-- /.content-wrapper -->
-
+	<script type="text/javascript">
+		
+	</script>
 	<jsp:include page="footer.jsp" />

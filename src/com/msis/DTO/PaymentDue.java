@@ -1,11 +1,11 @@
 package com.msis.DTO;
 
 public class PaymentDue {
-	int Id;
-	int student_id;
-	int term_id;
-	double due_amount;
-	String due_type;
+	private int Id;
+	private int student_id;
+	private int term_id;
+	private double due_amount;
+	private String due_type;
 	
 	public PaymentDue(){
 		super();
