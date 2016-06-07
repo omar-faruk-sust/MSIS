@@ -1,4 +1,4 @@
-<%@page import="com.msis.servlet.ShowGrade"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*"%>
 
@@ -13,10 +13,10 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					Your <small>Grade</small>
+					Your <small>Course Grade</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-eye"></i> View Grade </a></li>
+					<li><a href="#"><i class="fa fa-eye"></i> Add Grade </a></li>
 				</ol>
 			</section>
 
@@ -32,13 +32,28 @@
 							</div>
 							<div class="box-body">
 								<jsp:include page="error-success.jsp" />
-								<form method="POST" action="ShowGrade" accept-charset="UTF-8" class="form-horizontal" role="form">
+								<form method="POST" action="#" accept-charset="UTF-8" class="form-horizontal" role="form">
 									
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h4 class="panel-title">Term Info</h4>
+											<h4 class="panel-title">Upload Your Grade</h4>
 										</div>
 
+										<div class="form-group" style="padding-top: 25px;">
+											<label for="avatar" class="col-md-4 control-label">Select a term</label>
+											<div class="col-md-6">
+												<select data-column="3" id="term-select" name="selected_term" class="form-control" required="required">
+											
+													<option value="">
+														Select a term
+													</option>
+													<option value="1">Winter 2016</option>
+													<option value="2">Summer1 2016</option>
+													<option value="3">Summer2 2016</option>
+													<option value="4">Fall 2016</option>
+											</select>
+											</div>
+										</div>
 										<div class="form-group" style="padding-top: 25px;">
 											<label for="avatar" class="col-md-4 control-label">Select a term</label>
 											<div class="col-md-6">

@@ -1,4 +1,5 @@
-<%@page import="com.msis.servlet.ShowGrade"%>
+<%@page import="com.msis.DTO.PaymentDue"%>
+<%@page import="com.msis.model.DueAmountModel"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*"%>
 
@@ -31,8 +32,27 @@
 								</h3>
 							</div>
 							<div class="box-body">
-								<jsp:include page="error-success.jsp" />
-								<form method="POST" action="ShowGrade" accept-charset="UTF-8" class="form-horizontal" role="form">
+								<% 
+									String successStr = (String) request.getAttribute("successMsg");
+									String errorStr = (String) request.getAttribute("errorMsg");
+									if( successStr != null && !successStr.isEmpty()) 
+									
+									{ %>
+								<div class="alert alert-success alert-dismissible" role="alert">
+				                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				                        <span aria-hidden="true">&times;</span>
+				                    </button>
+				                    <%= successStr %>
+				                </div>
+				                <% } else if( errorStr != null && !errorStr.isEmpty()) { %>
+				                <div class="alert alert-error alert-dismissible" role="alert">
+				                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				                        <span aria-hidden="true">&times;</span>
+				                    </button>
+				                    <%= errorStr %>
+				                </div>
+								<% } %>
+								<form method="POST" action="#" accept-charset="UTF-8" class="form-horizontal" role="form">
 									
 									<div class="panel panel-default">
 										<div class="panel-heading">
@@ -42,19 +62,19 @@
 										<div class="form-group" style="padding-top: 25px;">
 											<label for="avatar" class="col-md-4 control-label">Select a term</label>
 											<div class="col-md-6">
-												<select data-column="3" id="term-select" name="selected_term" class="form-control" required="required">
+												<select data-column="3" id="term-select" name="term" class="form-control">
 											
 													<option value="">
-														Select a term
+														Select
 													</option>
-													<option value="1">Winter 2016</option>
-													<option value="2">Summer1 2016</option>
-													<option value="3">Summer2 2016</option>
-													<option value="4">Fall 2016</option>
+												
 											</select>
 											</div>
-										</div>										
-									</div>								
+										</div>
+										
+									</div>
+									
+									
 
 									<div class="form-group">
 										<div class="col-md-6 col-md-offset-4">
@@ -73,4 +93,7 @@
 		</div>
 	</div>
 	<!-- /.content-wrapper -->
+	<script type="text/javascript">
+		
+	</script>
 	<jsp:include page="footer.jsp" />

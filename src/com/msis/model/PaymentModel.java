@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.msis.DBConnection.MySQLAccess;
-import com.msis.DTO.PaymentDue;
 import com.msis.DTO.StudentPayment;
 import com.mysql.jdbc.Connection;
 

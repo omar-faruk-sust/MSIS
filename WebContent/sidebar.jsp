@@ -1,4 +1,3 @@
-
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
 	<!-- sidebar: style can be found in sidebar.less -->
@@ -39,9 +38,21 @@
 					<i class="fa fa-book"></i> <span>Grade</span>
 					<i class="fa fa-angle-left pull-right"></i>
 				</a>
+			
 				<ul class="treeview-menu">
-		            <li><a href="#"><i class="fa fa-book"></i>Cumulative GPA</a></li>
-		            <li><a href="view_grade.jsp"><i class="fa fa-book"></i>View Grade</a></li>
+					<% 
+						if( (session.getAttribute("userType") != null) && (session.getAttribute("userType") == "admin") ){
+					%>
+					 <li><a href="add_grade.jsp"><i class="fa fa-book"></i>Add Grade</a></li>
+					<% } %>
+					
+					<% 
+						if( (session.getAttribute("userType") != null) && (session.getAttribute("userType") == "student") ){
+					%>
+					 <li><a href="view_grade.jsp"><i class="fa fa-book"></i>View Grade</a></li>
+					 <li><a href="#"><i class="fa fa-book"></i>Cumulative GPA</a></li>
+					<% } %>
+		           
 		         </ul>
 			</li>
 			
