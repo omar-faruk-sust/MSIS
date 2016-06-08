@@ -111,8 +111,11 @@ public class Login extends HttpServlet{
 		}
 		
 		catch(Exception e){
-			System.out.println("Something went wrong. Please contact system admin.");
 			System.err.println(e.getMessage());
+
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
+			request.setAttribute("errorMsg", "Something went wrong. Please contact system admin.");
+			requestDispatcher.forward(request, response);
 		}
 	}
 
