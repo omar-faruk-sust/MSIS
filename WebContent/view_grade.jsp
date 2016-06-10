@@ -1,6 +1,23 @@
 <%@page import="com.msis.servlet.ShowGrade"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*"%>
+	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*,java.sql.*,java.sql.PreparedStatement"
+	
+	%>
+
+<% 
+	// Check this functionality for a new student who does not have any grade yet or not registered any semester yet
+	MySQLAccess obj = new MySQLAccess();
+	Connection connection = obj.getConnection();
+	int studentId = (Integer)session.getAttribute("userId");
+	//String sql = "SELECT ti.id, ti.term, CONCAT(sbj.subject_code,'-',cs.course_code,' ', cs.title) FROM registration_cart rgs, course_details cd, term_info ti, course cs, subject sbj where rgs.student_id="+ studentId + " and cs.id = cd.course_id and cd.id=rgs.course_details_id	and cs.subject_id=sbj.id and cd.term_id=ti.id";
+
+	String sql = "select distinct ti.id,ti.term from registration_cart rgs, course_details cd, term_info ti"+
+			" where rgs.student_id="+ studentId +
+			" and rgs.course_details_id=cd.id"+
+			" and cd.term_id=ti.id";
+	PreparedStatement prepareStm = connection.prepareStatement(sql);
+	ResultSet results = prepareStm.executeQuery();
+%>
 
 <jsp:include page="pre-header.jsp" />
 
@@ -47,10 +64,9 @@
 													<option value="">
 														Select a term
 													</option>
-													<option value="1">Winter 2016</option>
-													<option value="2">Summer1 2016</option>
-													<option value="3">Summer2 2016</option>
-													<option value="4">Fall 2016</option>
+													<% while(results.next()){ %>
+														<option value="<%= results.getInt(1) %>"><%= results.getString(2) %></option>
+													<%}%>
 											</select>
 											</div>
 										</div>										

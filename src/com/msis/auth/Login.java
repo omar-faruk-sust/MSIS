@@ -1,4 +1,5 @@
 package com.msis.auth;
+
 import com.msis.DBConnection.*;
 import com.msis.DTO.Admin;
 import com.msis.DTO.Student;
@@ -42,7 +43,7 @@ public class Login extends HttpServlet{
 			conn = obj.getConnection();
 			
 			// SQL Query
-			PreparedStatement login = conn.prepareStatement(" select * from Student_information_system.users where email=? and password=?");
+			PreparedStatement login = conn.prepareStatement(" select * from users where email=? and password=?");
 			
 			login.setString(1,email);
 			login.setString(2,password);

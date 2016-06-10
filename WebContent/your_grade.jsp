@@ -27,63 +27,38 @@
 					<div class="row">
 						<div class="box col-xs-12">
 							<div class="box-header">
-								<h3>
-									
-								</h3>
+								<h3></h3>
 							</div>
 							<div class="box-body">
-								<% 
-									String successStr = (String) request.getAttribute("successMsg");
-									String errorStr = (String) request.getAttribute("errorMsg");
-									if( successStr != null && !successStr.isEmpty()) 
-									
-									{ %>
-								<div class="alert alert-success alert-dismissible" role="alert">
-				                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				                        <span aria-hidden="true">&times;</span>
-				                    </button>
-				                    <%= successStr %>
-				                </div>
-				                <% } else if( errorStr != null && !errorStr.isEmpty()) { %>
-				                <div class="alert alert-error alert-dismissible" role="alert">
-				                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				                        <span aria-hidden="true">&times;</span>
-				                    </button>
-				                    <%= errorStr %>
-				                </div>
-								<% } %>
-								<form method="POST" action="#" accept-charset="UTF-8" class="form-horizontal" role="form">
-									
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h4 class="panel-title">Term Info</h4>
-										</div>
+								<jsp:include page="error-success.jsp" />
 
-										<div class="form-group" style="padding-top: 25px;">
-											<label for="avatar" class="col-md-4 control-label">Select a term</label>
-											<div class="col-md-6">
-												<select data-column="3" id="term-select" name="term" class="form-control">
-											
-													<option value="">
-														Select
-													</option>
-												
-											</select>
-											</div>
-										</div>
-										
-									</div>
-									
-									
+								<table class="table table-bordered">
+									<tr>
+										<th>Course Title</th>
+										<th>Grade Point</th>
+										<th>Grade</th>
+									</tr>
 
-									<div class="form-group">
-										<div class="col-md-6 col-md-offset-4">
-											<button type="submit" class="btn btn-primary">
-												<i class="fa fa-eye"></i> Show 
-											</button>
-										</div>
-									</div>
-								</form>
+									<% 
+						         		ArrayList rows = new ArrayList();
+						         		if (request.getAttribute("courseList") != null){
+						             		rows = (ArrayList) request.getAttribute("courseList");
+						         		}
+		         					%>
+									 <c:forEach items="${courseList}" var="courseInfo">
+										<tr role="row">
+											<c:forEach items="${courseInfo[0]}" var="course_title">
+												<td>${course_title}</td>
+											</c:forEach>
+											<c:forEach items="${courseInfo[1]}" var="gpa">
+												<td>${gpa}</td>
+											</c:forEach>
+											<c:forEach items="${courseInfo[2]}" var="grade_scale">
+												<td>${grade_scale}</td>
+											</c:forEach>
+										</tr>
+									</c:forEach>
+								</table>
 							</div>
 						</div>
 					</div>

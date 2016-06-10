@@ -6,10 +6,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*"%>
 <%
-	//String emailAtt = null; String userType = null;
-	//if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
-		//response.sendRedirect("login.jsp");
-	//}
+	String emailAtt = null; String userType = null;
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		response.sendRedirect("login.jsp");
+	}
 %>
 
 <%

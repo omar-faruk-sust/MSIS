@@ -25,6 +25,7 @@
 
 <jsp:include page="pre-header.jsp" />
 
+<!-- <body onload="noBack();" class="skin-blue"> -->
 <body class="skin-blue">
 <div class="wrapper">
     <jsp:include page="header.jsp" />

@@ -4,11 +4,7 @@
         </div>
 		<strong>Copyright &copy;<a href="#">MSIS</a>.</strong> All rights reserved to INSE2016.
 	</footer>
-    </footer>
 </div><!-- ./wrapper -->
-
-<!-- custom JS for our project -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/project.js"></script>
 
 <!-- jQuery 2.1.3 -->
 <script src="${pageContext.request.contextPath}/skins/adminLTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -48,5 +44,9 @@
 <script src="${pageContext.request.contextPath}/skins/adminLTE/dist/js/pages/dashboard.js" type="text/javascript"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${pageContext.request.contextPath}/skins/adminLTE/dist/js/demo.js" type="text/javascript"></script>
+
+<!-- custom JS for our project -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/project.js"></script>
+
 </body>
 </html>
