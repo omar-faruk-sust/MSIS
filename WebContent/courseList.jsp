@@ -2,7 +2,7 @@
 <%@ page import ="java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" %>
-<%@ page import="com.msis.registration.*" %>
+<%@ page import="com.msis.servlet.*" %>
 <%
 	String emailAtt = null; String nameAtt = null; String passwordAtt = null;
 	if(session.getAttribute("email") == null || session.getAttribute("name") == null){
@@ -51,8 +51,8 @@
         
         		<% 
          		ArrayList rows = new ArrayList();
-         		if (request.getAttribute("courseList") != null){
-             	rows = (ArrayList) request.getAttribute("courseList");
+         		if (session.getAttribute("courseList") != null){
+             		rows = (ArrayList) session.getAttribute("courseList");
          		}
          		%>
         
@@ -62,10 +62,11 @@
               <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div>            
               <div class="row">
               <div class="col-sm-12">
-	              <c:forEach items="${courseList}" var="courseInfo">          
+              <p align="center" style="background:Yellow; font-size:120%;">${message}</p>
+	              <c:forEach items="<%=rows %>" var="courseInfo">          
 	              <table aria-describedby="example2_info" role="grid" id="example2" class="table table-bordered table-hover dataTable">
 	                <tbody>
-	                <c:forEach items="${courseInfo[4]}" var="course">
+	                <c:forEach items="${courseInfo[5]}" var="course">
 		                <tr role="row">
 		                	<td colspan="7" bgcolor="#E6E6E6"><b>${course}</b></td> 	                	               
 		                </tr>
@@ -77,30 +78,38 @@
 			            <th>Meeting Date</th>
 			            <th>Term</th>
 			            <th>Status</th>
-			            <th>Add Course</th>
+			            <th>Action</th>
 		            </tr>
 		            <tr role="row">
-			            <c:forEach items="${courseInfo[1]}" var="instructor">
+			            <c:forEach items="${courseInfo[2]}" var="instructor">
 			                	<td>${instructor}</td> 	         
 			            </c:forEach>
-			            <c:forEach items="${courseInfo[2]}" var="dayTime">
+			            <c:forEach items="${courseInfo[3]}" var="dayTime">
 			                	<td>${dayTime}</td> 	         
 			            </c:forEach>  
-			            <c:forEach items="${courseInfo[3]}" var="location">
+			            <c:forEach items="${courseInfo[4]}" var="location">
 			                	<td>${location}</td> 	         
 			            </c:forEach>  
-			            <c:forEach items="${courseInfo[6]}" var="meeting">
+			            <c:forEach items="${courseInfo[7]}" var="meeting">
 			                	<td>${meeting}</td> 	         
 			            </c:forEach> 
-			            <c:forEach items="${courseInfo[0]}" var="term">
+			            <c:forEach items="${courseInfo[1]}" var="term">
 			                	<td>${term}</td> 	         
 			            </c:forEach>
-			            <c:forEach items="${courseInfo[5]}" var="status">
+			            <c:forEach items="${courseInfo[6]}" var="status">
 			                	<td>${status}</td> 	         
 			            </c:forEach> 
-			            <td>
-                    		<button type="button" class="btn btn-block btn-success">Select</button>
-                 		</td>    	               
+			            <form role="form" method="post" id="RegistrationCartAdd" action="RegistrationCartAdd">			           
+				             <c:forEach items="${courseInfo[8]}" var="registered">
+				             	<c:forEach items="${courseInfo[0]}" var="id"><input type="hidden" name="courseID" value="${id}"></c:forEach>
+				             
+					             <c:if test="${registered < 1}">
+										 <td>
+		                    				<button type="submit" class="btn btn-block btn-success">Add to Cart</button>
+		                 				</td>
+								</c:if>			             
+	                 		</c:forEach>    	
+                 		</form>               
 		            </tr>
 	                </tbody>                
 	              </table>
