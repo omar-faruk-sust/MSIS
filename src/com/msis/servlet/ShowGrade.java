@@ -50,17 +50,10 @@ public class ShowGrade extends HttpServlet {
 		MySQLAccess obj = new MySQLAccess();
 		Connection connection = obj.getConnection();
 		int studentId = (Integer)session.getAttribute("userId");
-//		String sql = "SELECT ti.id, ti.term, CONCAT(sbj.subject_code,'-',cs.course_code,' ', cs.title) as course_title"+
-//		" FROM registration_cart rgs, course_details cd, term_info ti, course cs, subject sbj where " +
-//		" rgs.student_id="+ studentId + 
-//		" and cs.id = cd.course_id " + 
-//		" and cd.id=rgs.course_details_id " + 
-//		" and cs.subject_id=sbj.id " + 
-//		" and cd.term_id=ti.id "+
-//		" and cd.term_id="+termId;
 		
+		// select all the courses and related info for a registered term and student id
 		String sql = "SELECT ti.id, ti.term, CONCAT(sbj.subject_code,'-',cs.course_code,' ', cs.title) as course_title, gpa, grade_scale," +
-		" cs.units as unit FROM registration_cart rgs, course_details cd, term_info ti, course cs, subject sbj, grade grd, grading_points gp" + 
+		" cs.units as unit, gpa*cs.units as point FROM registration_cart rgs, course_details cd, term_info ti, course cs, subject sbj, grade grd, grading_points gp" + 
 		" where rgs.student_id="+studentId+ 
 		" and cs.id = cd.course_id " +  
 		" and cd.id=rgs.course_details_id " + 
@@ -69,32 +62,39 @@ public class ShowGrade extends HttpServlet {
 		" and cd.term_id="+termId+
 		" and grd.course_id=rgs.course_details_id " +
 		" and grd.gpa=gp.points";
-				
+		
+		String term_name = null;
 		PreparedStatement prepareStm;
 		try {
 			prepareStm = connection.prepareStatement(sql);
 			ResultSet results = prepareStm.executeQuery();
-			ArrayList Rows = new ArrayList();
+			//make an String type arrayList containg all the info about course and GPA
+			ArrayList<ArrayList<String>> Rows = new ArrayList<ArrayList<String>>();
 			while(results.next()){
 				System.out.println(results.getString("course_title"));
 				System.out.println(results.getString("gpa"));
 				System.out.println(results.getString("grade_scale"));
-				ArrayList row = new ArrayList();
+				term_name = results.getString("term");
+				
+				ArrayList<String> row = new ArrayList<String>();
 				for (int i = 1; i <= 1 ; i++){
 			    	row.add(results.getString("course_title"));
 			    	row.add(results.getString("gpa"));
 			    	row.add(results.getString("grade_scale"));
 			    	row.add(results.getString("unit"));
+			    	row.add(results.getString("point"));
 			    }
 			    Rows.add(row);
 			}
 			
+			// Send the data into JSP page
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("your_grade.jsp");
 			request.setAttribute("courseList", Rows);
+			request.setAttribute("term_name", term_name);
 			requestDispatcher.forward(request, response);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Something went wrong. Please contact system admin.");
+			System.err.println(e.getMessage());
 		}
 	}
 
