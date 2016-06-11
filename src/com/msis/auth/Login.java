@@ -71,6 +71,7 @@ public class Login extends HttpServlet{
 					name = student.getFirst_name()+ " " + student.getLast_name();
 					userType = "student";
 					userId = student.getId();
+					session.setAttribute("studentId", userId);
 				}else{
 					AdminModel adminModel = new AdminModel();
 					Admin admin = adminModel.selectAdmin(dbEmail);
