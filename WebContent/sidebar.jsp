@@ -22,15 +22,19 @@
 			<li class="header">MAIN NAVIGATION</li>
 
 
-			<li class="treeview"><a href="#"> <i class="fa fa-file-o"></i>
-					<span>Course</span> <i class="fa fa-angle-left pull-right"></i>
-			</a>
+			<li class="treeview">
+				<a href="#">
+					<i class="fa fa-file-o"></i> 
+					<span>Course</span>
+		
+					<i class="fa fa-angle-left pull-right"></i>
+				</a>
 				<ul class="treeview-menu">
-					<li class="active"><a href="searchCourse.jsp"><i
-							class="fa fa-circle-o"></i> Search Course</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> Add Course</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> Drop Course</a></li>
-				</ul>
+		            		<li class="active"><a href="searchCourse.jsp"><i class="fa fa-circle-o"></i> Search Course</a></li>
+            				<li><a href="courseCart.jsp"><i class="fa fa-circle-o"></i> Course Cart</a></li>
+            				<li><a href="enrolledCourse.jsp"><i class="fa fa-circle-o"></i> Enrolled Course</a></li>
+            				<li><a href="dropCourse.jsp"><i class="fa fa-circle-o"></i> Drop Course</a></li>
+		         	</ul>
 			</li>
 			<li class="treeview"><a href="#"> <i class="fa fa-book"></i>
 					<span>Grade</span> <i class="fa fa-angle-left pull-right"></i>
