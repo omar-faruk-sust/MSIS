@@ -1,5 +1,6 @@
 <%@page import="com.msis.DTO.PaymentDue"%>
 <%@page import="com.msis.model.DueAmountModel"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*"%>
 
@@ -35,6 +36,7 @@
 								<table class="table table-bordered">
 									<tr>
 										<th>Course Title</th>
+										<th>Unit</th>
 										<th>Grade Point</th>
 										<th>Grade</th>
 									</tr>
@@ -49,6 +51,9 @@
 										<tr role="row">
 											<c:forEach items="${courseInfo[0]}" var="course_title">
 												<td>${course_title}</td>
+											</c:forEach>
+											<c:forEach items="${courseInfo[3]}" var="unit">
+												<td>${unit}</td>
 											</c:forEach>
 											<c:forEach items="${courseInfo[1]}" var="gpa">
 												<td>${gpa}</td>

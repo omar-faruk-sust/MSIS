@@ -59,8 +59,8 @@ public class ShowGrade extends HttpServlet {
 //		" and cd.term_id=ti.id "+
 //		" and cd.term_id="+termId;
 		
-		String sql = "SELECT ti.id, ti.term, CONCAT(sbj.subject_code,'-',cs.course_code,' ', cs.title) as course_title, gpa, grade_scale" +
-		" FROM registration_cart rgs, course_details cd, term_info ti, course cs, subject sbj, grade grd, grading_points gp" + 
+		String sql = "SELECT ti.id, ti.term, CONCAT(sbj.subject_code,'-',cs.course_code,' ', cs.title) as course_title, gpa, grade_scale," +
+		" cs.units as unit FROM registration_cart rgs, course_details cd, term_info ti, course cs, subject sbj, grade grd, grading_points gp" + 
 		" where rgs.student_id="+studentId+ 
 		" and cs.id = cd.course_id " +  
 		" and cd.id=rgs.course_details_id " + 
@@ -84,6 +84,7 @@ public class ShowGrade extends HttpServlet {
 			    	row.add(results.getString("course_title"));
 			    	row.add(results.getString("gpa"));
 			    	row.add(results.getString("grade_scale"));
+			    	row.add(results.getString("unit"));
 			    }
 			    Rows.add(row);
 			}
