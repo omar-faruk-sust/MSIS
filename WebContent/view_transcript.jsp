@@ -8,10 +8,7 @@
 	ArrayList<ArrayList<String>> courseList = new ArrayList<ArrayList<String>>();
 	TranscriptModel tcModle = new TranscriptModel();
 	courseList = tcModle.getFullTrascrip(studentId);
-	request.setAttribute("courseList", courseList);
-	while(courseList.size() >0 ){
-		
-	}
+	request.setAttribute("courseList", courseList);	
 %>
 
 <jsp:include page="pre-header.jsp" />
@@ -24,10 +21,10 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					Your <small>Grade</small>
+					Your <small>Transcript</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-eye"></i> View Grade </a></li>
+					<li><a href="#"><i class="fa fa-eye"></i> View Transcript </a></li>
 				</ol>
 			</section>
 
@@ -63,8 +60,10 @@
 											<th>Grading Point</th>
 										</tr>
 
-
+										<c:set var="total" value="${0}"/>
+										<c:set var="total_course_unit" value="${0}"/>
 										<c:forEach items="${courseList}" var="courseInfo">
+											
 											<tr role="row">
 												<c:forEach items="${courseInfo[0]}" var="term">
 													<td>${term}</td>
@@ -74,6 +73,7 @@
 												</c:forEach>
 												<c:forEach items="${courseInfo[4]}" var="unit">
 													<td>${unit}</td>
+													<c:set var="total_course_unit" value="${total_course_unit+unit}" />
 												</c:forEach>
 												<c:forEach items="${courseInfo[3]}" var="grade_scale">
 													<td>${grade_scale}</td>
@@ -83,11 +83,22 @@
 												</c:forEach>
 												<c:forEach items="${courseInfo[5]}" var="obtain_point">
 													<td>${obtain_point}</td>
+													<c:set var="total" value="${total + obtain_point}" />
 												</c:forEach>
 											</tr>
-										</c:forEach>
+										</c:forEach>										
 									</table>
 								</div>
+								
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">Your Cumulative CGPA</h4>
+									</div>
+									<div class="panel-body">
+										Your Cumulative CGPA for your program is :  ${total/total_course_unit}
+									</div>
+								</div>
+								
 							</div>
 						</div>
 					</div>
