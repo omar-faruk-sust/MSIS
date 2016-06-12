@@ -3,12 +3,12 @@
 	pageEncoding="ISO-8859-1"
 	import="com.msis.DBConnection.*, java.util.*,java.sql.*,java.sql.PreparedStatement,com.msis.model.TranscriptModel"%>
 
-<% 
-	int studentId = (Integer)session.getAttribute("userId");
+<%
+	int studentId = (Integer) session.getAttribute("userId");
 	ArrayList<ArrayList<String>> courseList = new ArrayList<ArrayList<String>>();
 	TranscriptModel tcModle = new TranscriptModel();
 	courseList = tcModle.getFullTrascrip(studentId);
-	request.setAttribute("courseList", courseList);	
+	request.setAttribute("courseList", courseList);
 %>
 
 <jsp:include page="pre-header.jsp" />
@@ -24,7 +24,8 @@
 					Your <small>Transcript</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-eye"></i> View Transcript </a></li>
+					<li><a href="#"><i class="fa fa-eye"></i> View Transcript
+					</a></li>
 				</ol>
 			</section>
 
@@ -60,45 +61,68 @@
 											<th>Grading Point</th>
 										</tr>
 
-										<c:set var="total" value="${0}"/>
-										<c:set var="total_course_unit" value="${0}"/>
+										<c:set var="total" value="${0}" />
+										<c:set var="total_course_unit" value="${0}" />
+										<c:set var="temp_unit" value="${0}" />
+										<c:set var="temp_term" value="${''}" />
+
 										<c:forEach items="${courseList}" var="courseInfo">
-											
+
 											<tr role="row">
 												<c:forEach items="${courseInfo[0]}" var="term">
-													<td>${term}</td>
+
+
+
+													<c:choose>
+														<c:when test="${term!=temp_term}">
+															<td>${term}</td>
+														</c:when>
+														<c:otherwise>
+															<td></td>
+														</c:otherwise>
+													</c:choose>
+
+													<c:set var="temp_term" value="${term}" />
 												</c:forEach>
 												<c:forEach items="${courseInfo[1]}" var="course_title">
 													<td>${course_title}</td>
 												</c:forEach>
 												<c:forEach items="${courseInfo[4]}" var="unit">
+													<c:set var="temp_unit" value="${unit}" />
 													<td>${unit}</td>
-													<c:set var="total_course_unit" value="${total_course_unit+unit}" />
+
 												</c:forEach>
 												<c:forEach items="${courseInfo[3]}" var="grade_scale">
 													<td>${grade_scale}</td>
 												</c:forEach>
 												<c:forEach items="${courseInfo[2]}" var="gpa">
 													<td>${gpa}</td>
+													<c:if test="${gpa!=''}">
+														<c:set var="total_course_unit"
+															value="${total_course_unit+temp_unit}" />
+													</c:if>
 												</c:forEach>
+
 												<c:forEach items="${courseInfo[5]}" var="obtain_point">
 													<td>${obtain_point}</td>
-													<c:set var="total" value="${total + obtain_point}" />
+													<c:if test="${obtain_point!=''}">
+														<c:set var="total" value="${total + obtain_point}" />
+													</c:if>
 												</c:forEach>
 											</tr>
-										</c:forEach>										
+										</c:forEach>
 									</table>
 								</div>
-								
+
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h4 class="panel-title">Your Cumulative CGPA</h4>
 									</div>
-									<div class="panel-body">
-										Your Cumulative CGPA for your program is :  ${total/total_course_unit}
-									</div>
+									<div class="panel-body">Your Cumulative CGPA for your
+
+										program is : ${total/total_course_unit}</div>
 								</div>
-								
+
 							</div>
 						</div>
 					</div>
