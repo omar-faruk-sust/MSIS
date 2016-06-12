@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.msis.DBConnection.MySQLAccess;
-import com.msis.DTO.CourseCart;
+//import com.msis.DTO.CourseCart;
 
 public class CourseModel {
 	

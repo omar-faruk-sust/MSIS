@@ -42,8 +42,11 @@
 				<ul class="treeview-menu">
 					<li><a href="view_grade.jsp"><i class="fa fa-book"></i>View
 							Your Grade</a></li>
-					<li><a href="view_transcript.jsp"><i class="fa fa-book"></i>View
-							Your Transcript</a></li>
+							<% if(session.getAttribute("userType").equals("student")){ %>
+									<li><a href="view_transcript.jsp"><i class="fa fa-book"></i>View Your Transcript</a></li>	
+							<% } else { %>
+								<li><a href="student_transcript.jsp"><i class="fa fa-book"></i>View Student Transcript</a></li>
+							<% } %>
 				</ul>
 			</li>
 

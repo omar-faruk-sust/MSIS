@@ -1,20 +1,27 @@
 <%@page import="com.msis.servlet.ShowGrade"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*,java.sql.*,java.sql.PreparedStatement"
-	
-	%>
+%>
 
 <% 
 	// Check this functionality for a new student who does not have any grade yet or not registered any semester yet
 	MySQLAccess obj = new MySQLAccess();
 	Connection connection = obj.getConnection();
-	int studentId = (Integer)session.getAttribute("userId");
+	int studentId=0;
+	String sql= null;
+			if(!session.getAttribute("userType").equals("admin")){
+				studentId = (Integer)session.getAttribute("userId");
+				sql = "select distinct ti.id,ti.term from registration_cart rgs, course_details cd, term_info ti"+
+						" where rgs.student_id="+ studentId +
+						" and rgs.course_details_id=cd.id"+
+						" and cd.term_id=ti.id";
+			} else {
+				//studentId = (Integer) session.getAttribute("studentId");
+				sql = "select ti.id,ti.term from term_info ti";
+			}
 	//String sql = "SELECT ti.id, ti.term, CONCAT(sbj.subject_code,'-',cs.course_code,' ', cs.title) FROM registration_cart rgs, course_details cd, term_info ti, course cs, subject sbj where rgs.student_id="+ studentId + " and cs.id = cd.course_id and cd.id=rgs.course_details_id	and cs.subject_id=sbj.id and cd.term_id=ti.id";
 
-	String sql = "select distinct ti.id,ti.term from registration_cart rgs, course_details cd, term_info ti"+
-			" where rgs.student_id="+ studentId +
-			" and rgs.course_details_id=cd.id"+
-			" and cd.term_id=ti.id";
+	
 	PreparedStatement prepareStm = connection.prepareStatement(sql);
 	ResultSet results = prepareStm.executeQuery();
 %>
@@ -55,7 +62,16 @@
 										<div class="panel-heading">
 											<h4 class="panel-title">Term Info</h4>
 										</div>
-
+										<% if(session.getAttribute("userType").equals("admin")){ %>
+										<div class="form-group" style="padding-top: 25px;">
+											<label for="avatar" class="col-md-4 control-label">Student Id</label>
+											<div class="col-md-6">
+												<input class="form-control" required="required" name="studentId"
+													type="number" min="1" value="" id="amount">
+											</div>
+										</div>	
+										<% } %>	
+										
 										<div class="form-group" style="padding-top: 25px;">
 											<label for="avatar" class="col-md-4 control-label">Select a term</label>
 											<div class="col-md-6">

@@ -39,4 +39,25 @@ public class StudentModel {
 		
 		return student;
 	}
+	
+	public boolean validateStudent(int studentId){
+		boolean returnStudentValidity = false;
+		String sql = "select * from "+ tableName +" where id=?";
+		
+		// Establish Connection
+		MySQLAccess obj = new MySQLAccess();
+		Connection connection = obj.getConnection();
+		
+		try {
+			PreparedStatement prepareStm = connection.prepareStatement(sql);
+			prepareStm.setInt(1, studentId);
+			ResultSet results = prepareStm.executeQuery();
+			while(results.next()){
+				returnStudentValidity = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return returnStudentValidity;
+	}
 }

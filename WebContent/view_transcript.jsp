@@ -4,7 +4,14 @@
 	import="com.msis.DBConnection.*, java.util.*,java.sql.*,java.sql.PreparedStatement,com.msis.model.TranscriptModel"%>
 
 <%
-	int studentId = (Integer) session.getAttribute("userId");
+	int studentId = 0;
+	if(!session.getAttribute("userType").equals("admin")){
+		studentId = (Integer) session.getAttribute("userId");
+	} else {
+		//studentId = Integer.parseInt(request.getAttribute("studentId"));
+		String selected_student = request.getAttribute("studentId").toString();
+		studentId = Integer.parseInt(selected_student);		
+	}
 	ArrayList<ArrayList<String>> courseList = new ArrayList<ArrayList<String>>();
 	TranscriptModel tcModle = new TranscriptModel();
 	courseList = tcModle.getFullTrascrip(studentId);
@@ -39,13 +46,12 @@
 
 									<a href="view_grade.jsp"
 										class="btn btn-primary btn-sm pull-right"><i
-										class="fa fa-pencil-square-o"></i> View grade Termwise</a>
-
+										class="fa fa-pencil-square-o"></i> View grade</a>
 								</h3>
 							</div>
 							<div class="box-body">
 								<jsp:include page="error-success.jsp" />
-
+								
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h4 class="panel-title">Your Full Transcript</h4>
@@ -70,9 +76,6 @@
 
 											<tr role="row">
 												<c:forEach items="${courseInfo[0]}" var="term">
-
-
-
 													<c:choose>
 														<c:when test="${term!=temp_term}">
 															<td>${term}</td>

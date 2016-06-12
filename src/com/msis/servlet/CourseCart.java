@@ -4,9 +4,7 @@ import com.msis.DBConnection.*;
 import java.sql.*;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.List;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 @WebServlet("/CourseCart")
@@ -108,8 +105,6 @@ public class CourseCart extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private void doPerform(HttpServletRequest request, HttpServletResponse response) {
-
-	}
+	
 
 }

@@ -57,6 +57,7 @@ public class Login extends HttpServlet{
 			String name = "null";
 			String userType = "null";
 			//String errorMsg = "null";
+			HttpSession session = request.getSession();
 			if(result.next()){
 				dbEmail = result.getString("email");
 				dbPassword = result.getString("password");
@@ -80,12 +81,12 @@ public class Login extends HttpServlet{
 					userId = admin.getId();
 				}
 				
-				HttpSession session = request.getSession();
 		        session.setAttribute("email", dbEmail);
 		        session.setAttribute("password", dbPassword);
 		        session.setAttribute("name", name);
 		        session.setAttribute("userType", userType);
 		        session.setAttribute("userId", userId);
+		       
 		        
 		        session.setMaxInactiveInterval(30*60); //session expires in 30 minutes   
 		        Cookie userEmail = new Cookie("email", dbEmail);
