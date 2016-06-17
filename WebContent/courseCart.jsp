@@ -58,6 +58,8 @@
 			<!-- end of pre-header -->
 			<!-- Main content -->
 			<section class="content">
+			
+			<jsp:include page="error-success.jsp" />
 				<%
 											if (session.getAttribute("userType").equals("admin")) {
 										%>
@@ -70,7 +72,7 @@
 								<h3></h3>
 							</div>
 							<div class="box-body">
-								<jsp:include page="error-success.jsp" />
+				
 								<form method="POST" action="CourseCart" accept-charset="UTF-8"
 									class="form-horizontal" role="form">
 

@@ -1,6 +1,8 @@
 package com.msis.servlet;
 
 import com.msis.DBConnection.*;
+import com.msis.model.StudentModel;
+
 import java.sql.*;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -41,16 +43,17 @@ public class SearchCourse extends HttpServlet {
 		if (session.getAttribute("userType").equals("admin")) {
 			studentId = Integer.parseInt(request.getParameter("studentID"));
 			session.setAttribute("studentId", studentId);
+			// check the student validity
+			StudentModel studentModel = new StudentModel();
+			if(studentModel.validateStudent(studentId) == false){
+				request.setAttribute("errorMsg", "Not a valid student id.");
+				RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/searchCourse.jsp");
+				requestDispatcher.forward(request, response);
+			}
 		} else {
 			studentId = (Integer) session.getAttribute("userId");
 			session.setAttribute("studentId", studentId);
-		}
-
-		System.out.print(term + "\n");
-		System.out.print(program + "\n");
-		System.out.print(subject + "\n");
-		System.out.print(courseNo + "\n");
-		// System.out.print(studentId+"\n");
+		} 
 
 		try {
 			// Establish Connection

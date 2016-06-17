@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.msis.DBConnection.MySQLAccess;
+import com.msis.model.StudentModel;
 
 @WebServlet("/EnrolledCourse")
 public class EnrolledCourse extends HttpServlet {
@@ -34,12 +35,20 @@ public class EnrolledCourse extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		int studentId;
 		if(session.getAttribute("studentId")!=null){
-		studentId = (Integer) session.getAttribute("studentId");	
+			studentId = (Integer) session.getAttribute("studentId");	
 		}
 		else
 		{
 			studentId= Integer.parseInt(request.getParameter("studentId"));
+			// check the student validity for admin enroll
+			StudentModel studentModel = new StudentModel();
+			if(studentModel.validateStudent(studentId) == false){
+				request.setAttribute("errorMsg", "Not a valid student id.");
+				RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/searchCourse.jsp");
+				requestDispatcher.forward(request, response);
+			}
 		}
+		
 		int termId = Integer.parseInt(request.getParameter("termId"));
 		String type = request.getParameter("type");
 		String successMSG = "";

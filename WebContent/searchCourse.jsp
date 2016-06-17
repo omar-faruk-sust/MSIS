@@ -17,7 +17,7 @@
 	url="jdbc:mysql://localhost/msis" user="root" password="root" />
 
 <sql:query dataSource="${msis}" var="term_info_result">
-SELECT * from term_info;
+SELECT * from term_info where CURDATE()< dne_date;
 </sql:query>
 
 <sql:query dataSource="${msis}" var="subject_result">
@@ -80,8 +80,8 @@ SELECT * from subject;
 
 										<div class="col-md-6">
 											<select data-column="3" class="form-control" id="program" name="program">
-												<option value="U">Undergraduate</option>
 												<option value="G">Graduate</option>
+												<option value="U">Undergraduate</option>												
 											</select>
 										</div>
 									</div>
