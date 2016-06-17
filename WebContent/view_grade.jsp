@@ -20,7 +20,7 @@
 		// if not admin then show the normal term selection page
 			if(!session.getAttribute("userType").equals("admin")){
 				studentId = (Integer)session.getAttribute("userId");
-				sql = "select distinct ti.id,ti.term from registration_cart rgs, course_details cd, term_info ti"+
+				sql = "select distinct ti.id,ti.term from registration rgs, course_details cd, term_info ti"+
 						" where rgs.student_id="+ studentId +
 						" and rgs.course_details_id=cd.id"+
 						" and cd.term_id=ti.id";

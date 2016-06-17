@@ -71,7 +71,8 @@ public class ShowGrade extends HttpServlet {
 			studentId = (Integer)session.getAttribute("userId");
 		}
 			
-		System.out.println(termId);
+		System.out.println("Selected Term Id is : " + termId);
+		System.out.println("Selected Student Id is : " + studentId);
 
 		MySQLAccess obj = new MySQLAccess();
 		Connection connection = obj.getConnection();
@@ -103,6 +104,7 @@ public class ShowGrade extends HttpServlet {
 				System.out.println(results.getString("gpa"));
 				System.out.println(results.getString("grade_scale"));
 				term_name = results.getString("term");
+				System.out.println(term_name);
 				
 				ArrayList<String> row = new ArrayList<String>();
 				for (int i = 1; i <= 1 ; i++){
