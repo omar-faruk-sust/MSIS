@@ -7,6 +7,14 @@
 <%@ page import="com.msis.servlet.*"%>
 
 <%
+	String emailAtt = null; String userType = null;
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		response.sendRedirect("login.jsp");
+	}
+	else{
+%>
+
+<%
 	String msg = "";
 	ArrayList rows = new ArrayList();
 	int studentId = 0;
@@ -29,7 +37,7 @@
 
 <jsp:include page="pre-header.jsp" />
 
-<body class="skin-blue">
+<body class="skin-blue" onload="noBack();">
 	<div class="wrapper">
 		<jsp:include page="header.jsp" />
 		<jsp:include page="sidebar.jsp" />
@@ -205,3 +213,4 @@
 
 
 		<jsp:include page="footer.jsp" />
+		<%}%>

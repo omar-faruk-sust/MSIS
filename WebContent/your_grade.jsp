@@ -1,7 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*"%>
-
+<%
+	String emailAtt = null; String userType = null;
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		response.sendRedirect("login.jsp");
+	}
+	else{
+%>
 <jsp:include page="pre-header.jsp" />
 
 <body class="skin-blue">
@@ -85,3 +91,4 @@
 		
 	</script>
 	<jsp:include page="footer.jsp" />
+	<%}%>

@@ -8,6 +8,14 @@
 <%@ page import="com.msis.servlet.*"%>
 
 <%
+	String emailAtt = null; String userType = null;
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		response.sendRedirect("login.jsp");
+	}
+	else{
+%>
+
+<%
 	ArrayList rows = new ArrayList();
 	if (session.getAttribute("studentId") != null) {
 		int studentId = (Integer) session.getAttribute("studentId");
@@ -197,3 +205,4 @@
 	</div>
 	<!-- /.content-wrapper -->
 	<jsp:include page="footer.jsp" />
+	<%}%>

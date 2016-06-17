@@ -2,6 +2,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*,java.sql.*,java.sql.PreparedStatement"
 %>
+<%
+	String emailAtt = null; String userType = null;
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		response.sendRedirect("login.jsp");
+	}
+	else{
+%>
 
 <% 
 	// Check this functionality for a new student who does not have any grade yet or not registered any semester yet
@@ -28,7 +35,7 @@
 
 <jsp:include page="pre-header.jsp" />
 
-<body class="skin-blue">
+<body onload="noBack();" class="skin-blue">
 	<div class="wrapper">
 		<jsp:include page="header.jsp" />
 		<jsp:include page="sidebar.jsp" />
@@ -106,3 +113,4 @@
 	</div>
 	<!-- /.content-wrapper -->
 	<jsp:include page="footer.jsp" />
+	<%}%>

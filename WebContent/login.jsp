@@ -20,7 +20,7 @@
 <title>Mini-SIS | Login</title>
 </head>
 
-<body>	
+<body onload="noBack();">	
 	<div class="wrapper">
 		<form class="form-signin" method="POST" action="Login">
 			<h2>
@@ -52,5 +52,7 @@
 			<br>
 		</form>
 	</div>
+	<!-- custom JS for our project -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/project.js"></script>
 </body>
 </html>

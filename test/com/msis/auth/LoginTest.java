@@ -14,7 +14,6 @@ public class LoginTest {
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.connect();
-		System.out.print(conn.getResponseCode());
 		assertEquals(200, conn.getResponseCode());
 		conn.disconnect();
 	}

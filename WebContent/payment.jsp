@@ -10,6 +10,7 @@
 	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
 		response.sendRedirect("login.jsp");
 	}
+	else{
 %>
 
 <%
@@ -26,7 +27,7 @@
 
 <jsp:include page="pre-header.jsp" />
 
-<body class="skin-blue">
+<body onload="noBack();" class="skin-blue">
 	<div class="wrapper">
 		<jsp:include page="header.jsp" />
 		<jsp:include page="sidebar.jsp" />
@@ -121,3 +122,4 @@
 		
 	</script>
 	<jsp:include page="footer.jsp" />
+	<%} %>>

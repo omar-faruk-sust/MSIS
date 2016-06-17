@@ -34,7 +34,7 @@
             				<li><a href="courseCart.jsp"><i class="fa fa-circle-o"></i> Course Cart</a></li>
             				<li><a href="enrolledCourse.jsp"><i class="fa fa-circle-o"></i> Enrolled Course</a></li>
             				<li><a href="dropCourse.jsp"><i class="fa fa-circle-o"></i> Drop Course</a></li>
-		         	</ul>
+		         </ul>
 			</li>
 			<li class="treeview"><a href="#"> <i class="fa fa-book"></i>
 					<span>Grade</span> <i class="fa fa-angle-left pull-right"></i>
@@ -52,11 +52,6 @@
 
 			<li>
 				<a href="payment.jsp"> <i class="fa-cc-visa"></i> <span>Payment</span>
-				</a>
-			</li>
-			
-			<li>
-				<a href="offer_new_semester.jsp"> <i class="fa-cc-visa"></i> <span>Offer a New Semester</span>
 				</a>
 			</li>
 

@@ -2,7 +2,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"
 	import="com.msis.DBConnection.*, java.util.*,java.sql.*,java.sql.PreparedStatement,com.msis.model.TranscriptModel"%>
-
+<%
+	String emailAtt = null; String userType = null;
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		response.sendRedirect("login.jsp");
+	}
+	else{
+%>
 <%
 	int studentId = 0;
 	if(!session.getAttribute("userType").equals("admin")){
@@ -19,7 +25,7 @@
 %>
 
 <jsp:include page="pre-header.jsp" />
-<body class="skin-blue">
+<body class="skin-blue" onload="noBack();">
 	<div class="wrapper">
 		<jsp:include page="header.jsp" />
 		<jsp:include page="sidebar.jsp" />
@@ -139,3 +145,4 @@
 		
 	</script>
 	<jsp:include page="footer.jsp" />
+	<%}%>

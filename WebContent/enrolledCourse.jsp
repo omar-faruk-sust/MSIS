@@ -5,6 +5,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" import="java.util.*"%>
 <%@ page import="com.msis.servlet.*"%>
+<%
+	String emailAtt = null; String userType = null;
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		response.sendRedirect("login.jsp");
+	}
+	else{
+%>
 
 <%
 	ArrayList rows = new ArrayList();
@@ -26,7 +33,7 @@
 
 <jsp:include page="pre-header.jsp" />
 
-<body class="skin-blue">
+<body class="skin-blue" onload="noBack();">
 	<div class="wrapper">
 		<jsp:include page="header.jsp" />
 		<jsp:include page="sidebar.jsp" />
@@ -179,3 +186,4 @@
 	</div>
 	<!-- /.content-wrapper -->
 	<jsp:include page="footer.jsp" />
+	<%}%>

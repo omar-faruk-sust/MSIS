@@ -2,14 +2,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"
 	import="com.msis.DBConnection.*, java.util.*,java.sql.*,java.sql.PreparedStatement,com.msis.model.TranscriptModel"%>
-<% 
-	if(!session.getAttribute("userType").equals("admin")){
-		// redirect to deashboard
-		
+<%
+	String emailAtt = null; String userType = null;
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		response.sendRedirect("login.jsp");
 	}
+	else{
 %>
 <jsp:include page="pre-header.jsp" />
-<body class="skin-blue">
+<body onload="noBack();" class="skin-blue">
 	<div class="wrapper">
 		<jsp:include page="header.jsp" />
 		<jsp:include page="sidebar.jsp" />
@@ -74,3 +75,4 @@
 	</div>
 	<!-- /.content-wrapper -->
 	<jsp:include page="footer.jsp" />
+	<% }%>

@@ -1,9 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	
+	<%
+	String emailAtt = null; String userType = null;
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		response.sendRedirect("login.jsp");
+	}
+	else{
+%>
 
 <jsp:include page="pre-header.jsp" />
 
-<body class="skin-blue">
+<body class="skin-blue" onload="noBack();">
 	<div class="wrapper">
 		<jsp:include page="header.jsp" />
 		<jsp:include page="sidebar.jsp" />
@@ -81,3 +89,4 @@
 	<!-- /.content-wrapper -->
 
 	<jsp:include page="footer.jsp" />
+	<%}%>

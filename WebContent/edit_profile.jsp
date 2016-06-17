@@ -3,7 +3,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*"%>
 
-<% 
+<%
+	String emailAtt = null; String userType = null;
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+		response.sendRedirect("login.jsp");
+	}
+	else{
+%>
+<%
 	MySQLAccess mysqlApp = new MySQLAccess();
 	StudentModel studentModel = new StudentModel();
 	Student student = studentModel.selectStudent((String)session.getAttribute("email"));
@@ -12,7 +19,7 @@
 
 <jsp:include page="pre-header.jsp" />
 
-<body class="skin-blue">
+<body class="skin-blue" onload="noBack();">
 	<div class="wrapper">
 		<jsp:include page="header.jsp" />
 		<jsp:include page="sidebar.jsp" />
@@ -43,7 +50,7 @@
 							</div>
 							<div class="box-body">
 								<form method="POST"
-									action="EditProfile"
+									action="#"
 									accept-charset="UTF-8" class="form-horizontal" role="form"
 									enctype="multipart/form-data">
 									
@@ -155,3 +162,4 @@
 	<!-- /.content-wrapper -->
 
 	<jsp:include page="footer.jsp" />
+	<%}%>

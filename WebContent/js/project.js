@@ -1,12 +1,12 @@
 (function($, document, window) {
-	function disableBackButton() {
+	function noBack() {
 		window.history.forward()
 	}
-	disableBackButton();
-	window.onload = disableBackButton();
+	noBack();
+	window.onload = noBack();
 	window.onpageshow = function(evt) {
 		if (evt.persisted)
-			disableBackButton()
+			noBack()
 	}
 	window.onunload = function() {
 		void (0)
