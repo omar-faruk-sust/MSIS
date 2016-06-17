@@ -26,7 +26,7 @@ public class TranscriptModel {
 						" (select gpa from grade where course_id=rg.course_details_id), '') as gpa, "+ 
 						" (select grade_scale from grading_points grp, grade g where g.gpa = grp.points and g.course_id=rg.course_details_id) as grade_scale,"+
 						" cs.units as unit " +
-						" from registration_cart rg, grade grd, course cs, course_details cd, term_info ti, subject sbj,grading_points gp" +
+						" from registration rg, grade grd, course cs, course_details cd, term_info ti, subject sbj,grading_points gp" +
 						" where rg.student_id="+studentId+
 						" and rg.course_details_id=cd.id" +
 						" and cd.course_id=cs.id" +

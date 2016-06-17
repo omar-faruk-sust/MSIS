@@ -18,7 +18,7 @@ public class RegisterCourse extends HttpServlet {
 	Connection conn = obj.getConnection();
 
 	private static final long serialVersionUID = 1L;
-	String successMSG = "";
+	
 	int type = 1;
 	
 	// Default constructor
@@ -31,6 +31,8 @@ public class RegisterCourse extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
+		String errorMsg = "";
+
 		int studentId = 0;
 		if (session.getAttribute("userType").equals("admin")) {
 			studentId = Integer.parseInt(session.getAttribute("studentId").toString());
@@ -165,12 +167,12 @@ public class RegisterCourse extends HttpServlet {
 								}
 
 							} else {
-								successMSG= "Time Conflicts";
+								errorMsg= "You have class time conflicts with another course.";
 							}
 						} 
 						
 						else{
-							successMSG= "Course takn more than " +max_credit+" credits";
+							errorMsg= "Course takn more than " +max_credit+" credits";
 						}
 						/*else if (totalCredit < 12) {
 							conflict = checkConflict(courseID, termID, studentId);
@@ -184,22 +186,22 @@ public class RegisterCourse extends HttpServlet {
 							}
 						}*/
 					} else {
-						successMSG= "DNE date Over";
+						errorMsg= "DNE date is over.";
 					}
 				} else {
-					successMSG= "Registration Not Started";
+					errorMsg= "Registration not started yet!";
 				}
 
 				}
 
 			} else {
-				successMSG= "Payment Due";
+				errorMsg= "Please pay your due payment.";
 			}
 		} else {
-			successMSG = "You Did Not Select Any Course";
+			errorMsg = "You did not select any course.";
 		}
 
-		request.setAttribute("message", successMSG);
+		request.setAttribute("errorMsg", errorMsg);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("courseCart.jsp");
 		requestDispatcher.forward(request, response);
 	}
@@ -270,7 +272,8 @@ public class RegisterCourse extends HttpServlet {
 	
 	public String CourseRegistration(int courseID, int studentId)
 	{
-
+		String errorMsg = "";
+		String successMsg = "";
 		String regiSqlQuery="";
 		int dbLimit=0;
 		// SQL Query
@@ -312,21 +315,21 @@ public class RegisterCourse extends HttpServlet {
 			PreparedStatement deleteCart = conn.prepareStatement(deleteCartQuery);
 			deleteCart.execute();
 			
-			successMSG= "Course Registration succesfully Done.";
+			successMsg= "Course Registration succesfully Done.";
             
 			//
 			// Delete from card have to implement here
 			//
 		}
 		else{
-			successMSG= "Database operation unsuccessful.";
+			errorMsg= "Database operation unsuccessful.";
 		}
 		}
 		catch(Exception e){
 			System.out.println("Something went wrong. Please contact system admin.");
 			System.err.println(e.getMessage());
 		}
-		return successMSG;
+		return successMsg;
 	}
 	
 	public void AddDue(int studentId, int tremId)

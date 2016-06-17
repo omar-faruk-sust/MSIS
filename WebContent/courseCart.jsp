@@ -189,17 +189,15 @@
 
 												</tbody>
 											</table>
-
-											
-
-										
-									</c:forEach>
-									<input type="submit" class="btn btn-info pull-right"
+		<input type="submit" class="btn btn-info pull-right"
 												value="Confirm"
 												onclick="javascript: form.action='RegisterCourse';" /> <input
 												type="submit" style="margin-right: 10px"
 												class="btn btn-danger pull-right" value="Delete"
 												onclick="javascript: form.action='DeleteFromCart';" />
+									</c:forEach>
+									
+									
 									</form>
 								</div>
 							</div>

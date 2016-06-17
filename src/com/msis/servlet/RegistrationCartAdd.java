@@ -72,10 +72,10 @@ public class RegistrationCartAdd extends HttpServlet {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("courseList.jsp");
 				requestDispatcher.forward(request, response);
 			} else if (dbCount > 0) {
-				String successMSG = "Course already in Cart.";
+				String errorMSG = "Course already in Cart.";
 
 				// HTTP session
-				request.setAttribute("successMsg", successMSG);
+				request.setAttribute("errorMsg", errorMSG);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("courseList.jsp");
 				requestDispatcher.forward(request, response);
 			}
