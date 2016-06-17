@@ -1,26 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%
 	String emailAtt = null; String nameAtt = null; String passwordAtt = null;
-	if(session.getAttribute("email") == null || session.getAttribute("name") == null){
+	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
 		response.sendRedirect("login.jsp");
 	}
 	else{
 		emailAtt = (String) session.getAttribute("email");
-		nameAtt = (String) session.getAttribute("name");
-	}
-		
-	String userEmail = null;
-	String userName = null;
-	String sessionID = null;
-	Cookie[] cookies = request.getCookies();
-		
-	if(cookies != null){
-		for(Cookie cookie : cookies){
-		    if(cookie.getName().equals("email")) userEmail = cookie.getValue();
-		    if(cookie.getName().equals("userName")) userName = cookie.getValue();
-		    if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
-		}
-	}
 %>
 
 <jsp:include page="pre-header.jsp" />
@@ -55,7 +40,7 @@
                 <div class="icon">
                   <i class="ion ion-bag"></i>
                 </div>
-                <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a class="small-box-footer" href="view_grade.jsp">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -68,7 +53,7 @@
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
                 </div>
-                <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a class="small-box-footer" href="payment.jsp">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -81,7 +66,7 @@
                 <div class="icon">
                   <i class="ion ion-person-add"></i>
                 </div>
-                <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a class="small-box-footer" href="searchCourse.jsp">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -94,7 +79,7 @@
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
                 </div>
-                <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a class="small-box-footer" href="profile.jsp">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
           </div>
@@ -103,3 +88,4 @@
     
     
     <jsp:include page="footer.jsp" />
+    <%}%>

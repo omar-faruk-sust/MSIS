@@ -8,28 +8,9 @@
 	String emailAtt = null;
 	String nameAtt = null;
 	String passwordAtt = null;
-	if (session.getAttribute("email") == null || session.getAttribute("name") == null) {
+	if (session.getAttribute("email") == null || session.getAttribute("userType") == null) {
 		response.sendRedirect("login.jsp");
 	} else {
-		emailAtt = (String) session.getAttribute("email");
-		nameAtt = (String) session.getAttribute("name");
-	}
-
-	String userEmail = null;
-	String userName = null;
-	String sessionID = null;
-	Cookie[] cookies = request.getCookies();
-
-	if (cookies != null) {
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("email"))
-				userEmail = cookie.getValue();
-			if (cookie.getName().equals("userName"))
-				userName = cookie.getValue();
-			if (cookie.getName().equals("JSESSIONID"))
-				sessionID = cookie.getValue();
-		}
-	}
 %>
 
 <sql:setDataSource var="msis" driver="com.mysql.jdbc.Driver"
@@ -164,3 +145,4 @@ SELECT * from subject;
 		<!-- /.content-wrapper -->
 
 		<jsp:include page="footer.jsp" />
+		<%}%>
