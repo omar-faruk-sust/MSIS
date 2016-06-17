@@ -48,25 +48,53 @@ public class RegisterCourse extends HttpServlet {
 		int dneValue = 0;
 		
 
-		// Check payment
-		try {
-			String dueSqlQuery = "";
-			dueSqlQuery = "select ((select IFNULL(SUM(due_amount), 0)from due where student_id=" + studentId
-					+ ")-(select IFNULL(SUM(paid_amount), 0)from payment where student_id=" + studentId
-					+ ")) as amt_due  from dual";
-			PreparedStatement payment = conn.prepareStatement(dueSqlQuery);
-			ResultSet result = payment.executeQuery();
-			while (result.next()) {
-				amountDue = Integer.parseInt(result.getString("amt_due"));
-				System.out.println("Amount:" + amountDue);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
+		
+		
 		if (request.getParameterValues("courseList") != null) {
 			// Check DNE date
-			if (amountDue <= 0) {
+			
+				for (String id : courseList) {
+					
+					int courseID = Integer.parseInt(id);
+					String termValue = null;
+					int termID = 0;
+					int regiStart=0;
+					boolean conflict = false;
+					int registered=0;
+					
+					try {
+						String checkCourseCount = "";
+						checkCourseCount = "select count(*) as courseCount from course_details cd, registration rgs where cd.id=rgs.course_details_id and cd.term_id=(select term_id from course_details cd where id=?)";
+						PreparedStatement courseCheck = conn.prepareStatement(checkCourseCount);
+						courseCheck.setInt(1, courseID);
+						ResultSet result01 = courseCheck.executeQuery();
+						while (result01.next()) {
+							registered = Integer.parseInt(result01.getString("courseCount"));
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					
+					if(registered<=0)
+					{
+						// Check payment
+						try {
+							String dueSqlQuery = "";
+							dueSqlQuery = "select ((select IFNULL(SUM(due_amount), 0)from due where student_id=" + studentId
+									+ ")-(select IFNULL(SUM(paid_amount), 0)from payment where student_id=" + studentId
+									+ ")) as amt_due  from dual";
+							PreparedStatement payment = conn.prepareStatement(dueSqlQuery);
+							ResultSet result = payment.executeQuery();
+							while (result.next()) {
+								amountDue = Integer.parseInt(result.getString("amt_due"));
+								System.out.println("Amount:" + amountDue);
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+					
+					if (amountDue <= 0) {
 				for (String id : courseList) {
 					int courseID = Integer.parseInt(id);
 					String termValue = null;
@@ -192,10 +220,11 @@ public class RegisterCourse extends HttpServlet {
 					errorMsg= "Registration not started yet!";
 				}
 
-				}
+				//}
 
 			} else {
 				errorMsg= "Please pay your due payment.";
+			}
 			}
 		} else {
 			errorMsg = "You did not select any course.";
