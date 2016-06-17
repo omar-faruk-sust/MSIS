@@ -18,7 +18,7 @@ public class RegisterCourse extends HttpServlet {
 	Connection conn = obj.getConnection();
 
 	private static final long serialVersionUID = 1L;
-	
+	String successMSG = "";
 	int type = 1;
 	
 	// Default constructor
@@ -31,8 +31,6 @@ public class RegisterCourse extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
-		String errorMsg = "";
-
 		int studentId = 0;
 		if (session.getAttribute("userType").equals("admin")) {
 			studentId = Integer.parseInt(session.getAttribute("studentId").toString());
@@ -48,7 +46,6 @@ public class RegisterCourse extends HttpServlet {
 		int dneValue = 0;
 		
 
-		
 		
 		if (request.getParameterValues("courseList") != null) {
 			// Check DNE date
@@ -95,13 +92,7 @@ public class RegisterCourse extends HttpServlet {
 					}
 					
 					if (amountDue <= 0) {
-				for (String id : courseList) {
-					int courseID = Integer.parseInt(id);
-					String termValue = null;
-					int termID = 0;
-					int regiStart=0;
-					boolean conflict = false;
-
+						//Check DNE Date
 					try {
 						String dneSqlQuery = "";
 						dneSqlQuery = "select if(ti.dne_date>CURDATE(),1,0) as dne, if(ti.registration_start<=CURDATE(),1,0) as regi_start, ti.id as id, ti.term from course_details cd, term_info ti where cd.term_id=ti.id and cd.id="
