@@ -9,7 +9,7 @@
 			noBack()
 	}
 	window.onunload = function() {
-		window.history.reload()
+		void (0)
 	}
 
 	//validateNumberAllowDecimal=function(event, isDecimal) {

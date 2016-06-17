@@ -30,11 +30,11 @@
 	ArrayList courseList = new ArrayList();
 	if (request.getAttribute("courseList") != null) {
 		courseList = (ArrayList) request.getAttribute("courseList");
-	} else if (session.getAttribute("studentId") != null && session.getAttribute("termId") != null && !session.getAttribute("userType").equals("admin")) {
+	} /*else if (session.getAttribute("studentId") != null && session.getAttribute("termId") != null && !session.getAttribute("userType").equals("admin")) {
 		CourseModel courseModel = new CourseModel();
 		courseList = courseModel.EnrollCourseList((Integer) session.getAttribute("studentId"),
 				(Integer) session.getAttribute("termId"));
-	}
+	}*/
 %>
 
 <jsp:include page="pre-header.jsp" />
