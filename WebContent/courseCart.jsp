@@ -140,9 +140,10 @@
 							</div>
 							<div class="row">
 								<div class="col-sm-12">
-									<p align="center" style="background: Yellow; font-size: 120%;">${message} <%=msg%></p>
+									<jsp:include page="error-success.jsp" />
+									<form method="post" name="form">
 									<c:forEach items="<%=rows%>" var="courseInfo">
-										<form method="post" name="form">
+										
 											<table aria-describedby="example2_info" role="grid"
 												id="example2"
 												class="table table-bordered table-hover dataTable">
@@ -189,15 +190,17 @@
 												</tbody>
 											</table>
 
-											<input type="submit" class="btn btn-info pull-right"
+											
+
+										
+									</c:forEach>
+									<input type="submit" class="btn btn-info pull-right"
 												value="Confirm"
 												onclick="javascript: form.action='RegisterCourse';" /> <input
 												type="submit" style="margin-right: 10px"
-												class="btn btn-info pull-right" value="Delete"
+												class="btn btn-danger pull-right" value="Delete"
 												onclick="javascript: form.action='DeleteFromCart';" />
-
-										</form>
-									</c:forEach>
+									</form>
 								</div>
 							</div>
 						</div>

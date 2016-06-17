@@ -2,7 +2,7 @@
         <div class="pull-right hidden-xs">
             <b>Concordia University</b>
         </div>
-		<strong>Copyright &copy;<a href="#">MSIS</a>.</strong> All rights reserved to INSE2016.
+		<strong>Copyright &copy;<a href="#">MSIS</a>.</strong> All rights reserved to INSE-6260, 2016.
 	</footer>
 </div><!-- ./wrapper -->
 

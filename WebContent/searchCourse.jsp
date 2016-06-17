@@ -45,25 +45,27 @@ SELECT * from subject;
 			<!-- end of pre-header -->
 			<!-- Main content -->
 			<section class="content">
-				<div class="row">
-					<!-- left column -->
-
-					<!--/.col (left) -->
-					<!-- right column -->
-					<div class="col-md-6">
-						<!-- Horizontal Form -->
-						<div class="box box-info">
-							<div class="box-header with-border">
-								<h3 class="box-title">Horizontal Form</h3>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="box col-xs-12">
+							<div class="box-header">
+								<h3></h3>
 							</div>
-							<!-- /.box-header -->
-							<!-- form start -->
-							<form class="form-horizontal" method="post" action="SearchCourse">
-								<div class="box-body">
-									<div class="form-group">
-										<label for="inputEmail3" class="col-sm-2 control-label">Term</label>
-										<div class="col-sm-10">
-											<select id="term" name="term">
+							<div class="box-body">
+								<!-- include the error message handler -->
+								<jsp:include page="error-success.jsp" />
+								<form method="POST" action="SearchCourse" accept-charset="UTF-8"
+									class="form-horizontal" role="form">
+									
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">Search</h4>
+										</div>
+										
+										<div class="form-group" style="padding-top: 25px;">
+										<label for="inputEmail3" class="col-md-4 control-label">Term</label>
+										<div class="col-md-6">
+											<select data-column="3" class="form-control" id="term" name="term">
 												<c:forEach var="row" items="${term_info_result.rows}">
 													<option value=<c:out value="${row.id}"/>><c:out
 															value="${row.term}" /></option>
@@ -73,11 +75,11 @@ SELECT * from subject;
 									</div>
 
 									<div class="form-group">
-										<label for="inputPassword3" class="col-sm-2 control-label">Course
+										<label for="inputPassword3" class="col-md-4 control-label">Course
 											Career</label>
 
-										<div class="col-sm-10">
-											<select id="program" name="program">
+										<div class="col-md-6">
+											<select data-column="3" class="form-control" id="program" name="program">
 												<option value="U">Undergraduate</option>
 												<option value="G">Graduate</option>
 											</select>
@@ -85,10 +87,10 @@ SELECT * from subject;
 									</div>
 
 									<div class="form-group">
-										<label for="inputPassword3" class="col-sm-2 control-label">Subject</label>
+										<label for="inputPassword3" class="col-md-4 control-label">Subject</label>
 
-										<div class="col-sm-10">
-											<select id="subject" name="subject">
+										<div class="col-md-6">
+											<select data-column="2" class="form-control" id="subject" name="subject">
 												<c:forEach var="sub_row" items="${subject_result.rows}">
 													<option value=<c:out value="${sub_row.subject_code}"/>><c:out
 															value="${sub_row.subject_code}" /></option>
@@ -98,13 +100,12 @@ SELECT * from subject;
 									</div>
 
 									<div class="form-group">
-										<label for="inputPassword3" class="col-sm-2 control-label">Course
+										<label for="inputPassword3" class="col-md-4 control-label">Course
 											Number</label>
 
-										<div class="col-sm-10">
+										<div class="col-md-6">
 											<input type="text" class="form-control" id="courseNo"
-												name="courseNo" placeholder="" maxlength="4" size="10"
-												style="width: 10%">
+												name="courseNo" placeholder="" maxlength="4" size="10">
 										</div>
 									</div>
 
@@ -112,37 +113,38 @@ SELECT * from subject;
 										if (session.getAttribute("userType").equals("admin")) {
 									%>
 									<div class="form-group">
-										<label for="inputPassword3" class="col-sm-2 control-label">Student
+										<label for="inputPassword3" class="col-md-4 control-label">Student
 											ID</label>
 
-										<div class="col-sm-10">
+										<div class="col-md-6">
 											<input type="text" class="form-control" required="required" id="studentID"
-												name="studentID" placeholder="" maxlength="10" size="10"
-												style="width: 10%">
+												name="studentID" placeholder="" maxlength="10" size="10">
 										</div>
 									</div>
 									<%
 										}
-									%>
-								</div>
-								<!-- /.box-body -->
-								<div class="box-footer">
-									<button type="submit" class="btn btn-info pull-right">Search</button>
-								</div>
-								<!-- /.box-footer -->
-							</form>
+									%>									
+									</div>
+
+									<div class="form-group">
+										<div class="col-md-6 col-md-offset-4">
+											<button type="submit" class="btn btn-primary">
+												<i class="fa fa-save"></i> Search
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
-						<!-- /.box -->
-						<!-- general form elements disabled -->
-
-						<!-- /.box -->
 					</div>
-					<!--/.col (right) -->
 				</div>
-				<!-- /.row -->
 			</section>
+			<!-- /.content -->
 		</div>
-		<!-- /.content-wrapper -->
-
-		<jsp:include page="footer.jsp" />
-		<%}%>
+	</div>
+	<!-- /.content-wrapper -->
+	<script type="text/javascript">
+		
+	</script>
+	<jsp:include page="footer.jsp" />
+	<%} %>>

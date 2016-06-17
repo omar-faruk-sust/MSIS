@@ -17,6 +17,10 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/CourseCart")
 public class CourseCart extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	MySQLAccess obj = new MySQLAccess();
 	Connection conn = obj.getConnection();
 
@@ -87,7 +91,7 @@ public class CourseCart extends HttpServlet {
 			}
 			if(Rows.size()<1)
 			{
-				request.setAttribute("message", "Do Data Found");
+				request.setAttribute("errorMsg", "Do Data Found. Please try again.");
 			}
 			request.setAttribute("courseList", Rows);
 			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/courseCart.jsp");
