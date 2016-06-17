@@ -49,11 +49,12 @@
 							<% } %>
 				</ul>
 			</li>
-
+			<% if(session.getAttribute("userType").equals("student")){ %>
 			<li>
 				<a href="payment.jsp"> <i class="fa-cc-visa"></i> <span>Payment</span>
-				</a>
+			</a>
 			</li>
+			<% } %>
 
 		</ul>
 	</section>

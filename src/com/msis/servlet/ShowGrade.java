@@ -36,7 +36,11 @@ public class ShowGrade extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession(true);
+		if(session.getAttribute("userType") == null){
+			RequestDispatcher requestDispatcher1 = request.getRequestDispatcher("login.jsp");
+			requestDispatcher1.forward(request, response);
+		}
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

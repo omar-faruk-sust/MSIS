@@ -44,10 +44,11 @@
         <div class="box">            
             <div class="box-body">
               <div class="dataTables_wrapper form-inline dt-bootstrap" id="example2_wrapper">	  
-              <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div>            
+                         
               <div class="row">
               <div class="col-sm-12">
-              <p align="center" style="background:Yellow; font-size:120%;">${message}</p>
+              <!-- include the error messgae handler -->
+				<jsp:include page="error-success.jsp" />
 	              <c:forEach items="<%=rows %>" var="courseInfo">          
 	              <table aria-describedby="example2_info" role="grid" id="example2" class="table table-bordered table-hover dataTable">
 	                <tbody>

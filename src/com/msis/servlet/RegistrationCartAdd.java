@@ -67,23 +67,22 @@ public class RegistrationCartAdd extends HttpServlet {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				String successMSG = "Course Succesfully Added To Cart.";
-
-				// HTTP session
-				request.setAttribute("message", successMSG);
+				String successMSG = "Course successfully added to cart.";
+				request.setAttribute("successMsg", successMSG);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("courseList.jsp");
 				requestDispatcher.forward(request, response);
 			} else if (dbCount > 0) {
-				String successMSG = "Course Already in Cart.";
+				String successMSG = "Course already in Cart.";
 
 				// HTTP session
-				request.setAttribute("message", successMSG);
+				request.setAttribute("successMsg", successMSG);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("courseList.jsp");
 				requestDispatcher.forward(request, response);
 			}
 
 			else {
 				System.out.println("Database operation unsuccessful.");
+				request.setAttribute("errorMsg", "Operation unsuccessful. Please try again!");
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("courseList.jsp");
 				requestDispatcher.forward(request, response);
 			}

@@ -9,6 +9,8 @@
 	String emailAtt = null; String userType = null;
 	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
 		response.sendRedirect("login.jsp");
+	} else if(!session.getAttribute("userType").equals("student")) {
+		response.sendRedirect("dashboard.jsp");
 	}
 	else{
 %>
@@ -20,7 +22,7 @@
 	// paid model class
 	PaymentModel paidAmount = new PaymentModel();
 	int studentId = (Integer)session.getAttribute("userId");
-	//Integer studentId = Integer.parseInt((String)session.getAttribute("userId"));
+
 	PaymentDue paymentDue = dueAmount.totalDueAmount(studentId);
 	StudentPayment alredyPaid = paidAmount.totalPaidAmount(studentId);
 %>
@@ -75,6 +77,14 @@
 												<%= alredyPaid.getPaid_amount() %>
 											</div>
 										</div>
+										<% if(paymentDue.getDue_amount() - alredyPaid.getPaid_amount() < 0) { %>
+										<div class="form-group" style="padding-top: 25px;">
+											<label for="avatar" class="col-md-4 control-label">Advance Paid Amount</label>
+											<div class="col-md-6">
+												<%= alredyPaid.getPaid_amount() - paymentDue.getDue_amount() %>
+											</div>
+										</div>
+										<% } else {  %>
 										
 										<div class="form-group" style="padding-top: 25px;">
 											<label for="avatar" class="col-md-4 control-label">Total Due Amount</label>
@@ -82,6 +92,7 @@
 												<%= paymentDue.getDue_amount() - alredyPaid.getPaid_amount() %>
 											</div>
 										</div>
+										<% }  %>
 										
 									</div>
 									
@@ -100,7 +111,7 @@
 											</div>
 										</div>									
 									</div>
-
+									
 									<div class="form-group">
 										<div class="col-md-6 col-md-offset-4">
 											<button type="submit" class="btn btn-primary">
@@ -108,6 +119,7 @@
 											</button>
 										</div>
 									</div>
+									
 								</form>
 							</div>
 						</div>

@@ -53,7 +53,7 @@ public class Payment extends HttpServlet {
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("payment.jsp");
 		if(paymentFlag) {
-			request.setAttribute("successMsg", "Your payment has been made suecssfully.");
+			request.setAttribute("successMsg", "Your payment has been made succecssfully.");
 		} else {
 			request.setAttribute("errorMsg", "Something is wrong. Please try again.");
 		}
