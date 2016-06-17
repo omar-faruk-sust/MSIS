@@ -125,12 +125,7 @@
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h4 class="panel-title">Your Cumulative CGPA</h4>
-									</div>
-									
-									<c:if test="${total/total_course_unit != Double.NaN}">
-									<div class="panel-body">Your Cumulative CGPA for your
-										program is : ${total/total_course_unit}</div>
-									</c:if>
+									</div>									
 									
 									<c:choose>
 										<c:when test="${total/total_course_unit != Double.NaN}">
