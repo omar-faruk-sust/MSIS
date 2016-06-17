@@ -3,6 +3,7 @@
 	pageEncoding="ISO-8859-1" import="com.msis.DBConnection.*, java.util.*,java.sql.*,java.sql.PreparedStatement"
 %>
 <%
+	//not logged in then redirect to login
 	String emailAtt = null; String userType = null;
 	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
 		response.sendRedirect("login.jsp");
@@ -16,6 +17,7 @@
 	Connection connection = obj.getConnection();
 	int studentId=0;
 	String sql= null;
+		// if not admin then show the normal term selection page
 			if(!session.getAttribute("userType").equals("admin")){
 				studentId = (Integer)session.getAttribute("userId");
 				sql = "select distinct ti.id,ti.term from registration_cart rgs, course_details cd, term_info ti"+
@@ -23,11 +25,8 @@
 						" and rgs.course_details_id=cd.id"+
 						" and cd.term_id=ti.id";
 			} else {
-				//studentId = (Integer) session.getAttribute("studentId");
 				sql = "select ti.id,ti.term from term_info ti";
 			}
-	//String sql = "SELECT ti.id, ti.term, CONCAT(sbj.subject_code,'-',cs.course_code,' ', cs.title) FROM registration_cart rgs, course_details cd, term_info ti, course cs, subject sbj where rgs.student_id="+ studentId + " and cs.id = cd.course_id and cd.id=rgs.course_details_id	and cs.subject_id=sbj.id and cd.term_id=ti.id";
-
 	
 	PreparedStatement prepareStm = connection.prepareStatement(sql);
 	ResultSet results = prepareStm.executeQuery();

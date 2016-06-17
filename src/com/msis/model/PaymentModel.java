@@ -12,6 +12,11 @@ public class PaymentModel {
 	
 	protected String tableName = "payment";
 	
+	/**
+	 * make an payment for an student
+	 * @param payment
+	 * @return boolean value
+	 */
 	public boolean create(StudentPayment payment){
 		String sql = "insert into "+ tableName +" (student_id,paid_amount) values (?, ?)";
 		MySQLAccess dbConnection = new MySQLAccess();
@@ -29,6 +34,11 @@ public class PaymentModel {
 		}
 	}
 	
+	/**
+	 * get the total paidAmount for an student
+	 * @param studentId
+	 * @return paidAmount
+	 */
 	public StudentPayment totalPaidAmount(int studentId) {
 		StudentPayment paidAmount = null;
 		

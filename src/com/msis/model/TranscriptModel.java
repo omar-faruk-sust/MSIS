@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import com.msis.DBConnection.MySQLAccess;
 
 public class TranscriptModel {
-	
+	/**
+	 * 
+	 * @param studentId
+	 * @return arraylist with course info and gpa
+	 */
 	public ArrayList<ArrayList<String>> getFullTrascrip(int studentId){
 		ArrayList<ArrayList<String>> Rows = null;
 		
@@ -17,15 +21,6 @@ public class TranscriptModel {
 		MySQLAccess obj = new MySQLAccess();
 		Connection connection = obj.getConnection();
 		
-//		String sql = "SELECT ti.id, ti.term, CONCAT(sbj.subject_code,'-',cs.course_code,' ', cs.title) as course_title, gpa, grade_scale," +
-//				" cs.units as unit, gpa*cs.units as point FROM registration_cart rgs, course_details cd, term_info ti, course cs, subject sbj, grade grd, grading_points gp" + 
-//				" where rgs.student_id="+studentId+ 
-//				" and cs.id = cd.course_id " +  
-//				" and cd.id=rgs.course_details_id " + 
-//				" and cs.subject_id=sbj.id " +  
-//				" and cd.term_id=ti.id " + 
-//				" and grd.course_id=rgs.course_details_id " +
-//				" and grd.gpa=gp.points";
 		String sql = "select distinct course_details_id, CONCAT( sbj.subject_code, '-', cs.course_code, ' ', cs.title ) AS course_title, ti.term, "+
 						" IF(EXISTS(select gpa from grade where course_id=rg.course_details_id), "+ 
 						" (select gpa from grade where course_id=rg.course_details_id), '') as gpa, "+ 
@@ -46,13 +41,9 @@ public class TranscriptModel {
 		try {
 			prepareStm = connection.prepareStatement(sql);
 			ResultSet results = prepareStm.executeQuery();
-			//make an String type arrayList containg all the info about course and GPA
+			//make an String type arrayList containing all the info about course and GPA
 			Rows = new ArrayList<ArrayList<String>>();
 			while(results.next()){
-//				System.out.println(results.getString("course_title"));
-//				System.out.println(results.getString("gpa"));
-//				System.out.println(results.getString("grade_scale"));
-				
 				
 				ArrayList<String> row = new ArrayList<String>();
 				for (int i = 1; i <= 1 ; i++){
@@ -67,9 +58,9 @@ public class TranscriptModel {
 			    	} else {
 			    		row.add("");
 			    	}
-			    	System.out.println(results.getString("unit"));
-					System.out.println(results.getString("gpa"));
-					System.out.println(results.getString("grade_scale"));
+//			    	System.out.println(results.getString("unit"));
+//					System.out.println(results.getString("gpa"));
+//					System.out.println(results.getString("grade_scale"));
 			    }
 				Rows.add(row);
 				

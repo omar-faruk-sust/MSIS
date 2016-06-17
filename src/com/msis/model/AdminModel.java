@@ -19,12 +19,12 @@ public class AdminModel {
 		Connection connection = obj.getConnection();
 		
 		try {
+			// Retrieve the data and return it
 			PreparedStatement prepareStm = connection.prepareStatement(sql);
 			prepareStm.setString(1, email);
 			ResultSet results = prepareStm.executeQuery();
 			while(results.next()){
 				email = results.getString("email");
-				
 				int id = results.getInt("id");
 				String first_name = results.getString("first_name");
 				String last_name = results.getString("last_name");

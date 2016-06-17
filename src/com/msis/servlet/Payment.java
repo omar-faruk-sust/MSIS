@@ -24,18 +24,17 @@ public class Payment extends HttpServlet {
      */
     public Payment() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	public Payment(int student_id, double amount) {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -47,6 +46,7 @@ public class Payment extends HttpServlet {
 		Double amount = Double.parseDouble(request.getParameter("amount"));
 		System.out.println(student_id + " " + amount);
 		
+		//save the payment to db
 		StudentPayment studentPayment = new StudentPayment(student_id, (double)amount);
 		PaymentModel paymentModel = new PaymentModel();
 		boolean paymentFlag = paymentModel.create(studentPayment);
@@ -57,7 +57,6 @@ public class Payment extends HttpServlet {
 		} else {
 			request.setAttribute("errorMsg", "Something is wrong. Please try again.");
 		}
-		
 		requestDispatcher.forward(request, response);
 	}
 

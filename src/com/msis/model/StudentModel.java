@@ -11,6 +11,11 @@ import com.msis.DTO.Student;
 public class StudentModel {
 	protected String tableName = "student";
 	
+	/**
+	 * get a student information and return it
+	 * @param email
+	 * @return student object with data
+	 */
 	public Student selectStudent(String email) {
 		Student student = null;
 		String sql = "select * from "+ tableName +" where email=?";

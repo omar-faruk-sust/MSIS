@@ -66,25 +66,11 @@ public class ShowGrade extends HttpServlet {
 		}else {
 			studentId = (Integer)session.getAttribute("userId");
 		}
-		
-		
+			
 		System.out.println(termId);
-	
+
 		MySQLAccess obj = new MySQLAccess();
 		Connection connection = obj.getConnection();
-
-		
-		// select all the courses and related info for a registered term and student id
-//		String sql = "SELECT ti.id, ti.term, CONCAT(sbj.subject_code,'-',cs.course_code,' ', cs.title) as course_title, gpa, grade_scale," +
-//		" cs.units as unit, gpa*cs.units as point FROM registration_cart rgs, course_details cd, term_info ti, course cs, subject sbj, grade grd, grading_points gp" + 
-//		" where rgs.student_id="+studentId+ 
-//		" and cs.id = cd.course_id " +  
-//		" and cd.id=rgs.course_details_id " + 
-//		" and cs.subject_id=sbj.id " +  
-//		" and cd.term_id=ti.id " + 
-//		" and cd.term_id="+termId+
-//		" and grd.course_id=rgs.course_details_id " +
-//		" and grd.gpa=gp.points";
 		
 		String sql = "select distinct course_details_id, CONCAT( sbj.subject_code, '-', cs.course_code, ' ', cs.title ) AS course_title, ti.term, "+
 				" IF(EXISTS(select gpa from grade where course_id=rg.course_details_id), "+ 
@@ -106,7 +92,7 @@ public class ShowGrade extends HttpServlet {
 		try {
 			prepareStm = connection.prepareStatement(sql);
 			ResultSet results = prepareStm.executeQuery();
-			//make an String type arrayList containg all the info about course and GPA
+			//make an String type arrayList contain all the info about course and GPA
 			ArrayList<ArrayList<String>> Rows = new ArrayList<ArrayList<String>>();
 			while(results.next()){
 				System.out.println(results.getString("course_title"));
@@ -127,11 +113,8 @@ public class ShowGrade extends HttpServlet {
 			    		row.add(point);
 			    	} else {
 			    		row.add("");
-			    	}
-			    	
+			    	}	
 			    }
-				
-				
 			    Rows.add(row);
 			}
 			

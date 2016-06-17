@@ -14,6 +14,10 @@ public class MySQLAccess {
    	static final String USER = "root";
    	static final String PASS = "root";
 	
+   	/**
+   	 * main db connection connection method
+   	 * @return
+   	 */
 	public Connection getConnection(){
 		Connection connection = null;
 		try {

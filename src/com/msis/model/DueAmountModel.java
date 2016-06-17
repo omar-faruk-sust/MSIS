@@ -10,6 +10,11 @@ import com.msis.DTO.PaymentDue;
 public class DueAmountModel {
 	protected String tableName = "due";
 	
+	/**
+	 * return the dueAmount of tuition fee for an student
+	 * @param studentId
+	 * @return dueAmount
+	 */
 	public PaymentDue totalDueAmount(int studentId) {
 		PaymentDue dueAmount = null;
 		

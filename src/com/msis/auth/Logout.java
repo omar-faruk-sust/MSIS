@@ -16,7 +16,6 @@ public class Logout extends HttpServlet {
        
     public Logout() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,7 +37,6 @@ public class Logout extends HttpServlet {
         }
         //invalidate the session if exists
         HttpSession session = request.getSession(false);
-        //System.out.println("User="+session.getAttribute("user"));
         if(session != null){
             session.invalidate();
         }

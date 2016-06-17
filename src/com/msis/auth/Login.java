@@ -37,7 +37,6 @@ public class Login extends HttpServlet{
 		String password = request.getParameter("password");
 		
 		try{
-			
 			MySQLAccess obj = new MySQLAccess();
 			Connection conn = null;
 			conn = obj.getConnection();
@@ -49,22 +48,21 @@ public class Login extends HttpServlet{
 			login.setString(2,password);
 			
 			ResultSet result = login.executeQuery();
-			
+
 			String dbEmail = "null";
 			int userId;
 			String dbPassword = "null";
 			String type = "null";
 			String name = "null";
 			String userType = "null";
-			//String errorMsg = "null";
+	
 			HttpSession session = request.getSession();
+			
+			// if login successful then set data based on user to session object
 			if(result.next()){
 				dbEmail = result.getString("email");
 				dbPassword = result.getString("password");
 				type = result.getString("type");
-			
-				System.out.println(email + password);
-				System.out.println(dbEmail + dbPassword);
 				
 				if(type.equals("1")){
 					StudentModel studentModel = new StudentModel();

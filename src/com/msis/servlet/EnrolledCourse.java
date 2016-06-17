@@ -20,6 +20,11 @@ import com.msis.DBConnection.MySQLAccess;
 @WebServlet("/EnrolledCourse")
 public class EnrolledCourse extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public EnrolledCourse() {
 		// TODO Auto-generated constructor stub
 	}

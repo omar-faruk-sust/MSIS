@@ -7,7 +7,6 @@ public class StudentPayment {
 	
 	public StudentPayment() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public StudentPayment(int student_id) {
