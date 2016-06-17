@@ -2,18 +2,13 @@ package com.msis.servlet;
 
 import com.msis.DBConnection.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 @WebServlet("/RegisterCourse")
@@ -74,11 +69,12 @@ public class RegisterCourse extends HttpServlet {
 					int courseID = Integer.parseInt(id);
 					String termValue = null;
 					int termID = 0;
+					int regiStart=0;
 					boolean conflict = false;
 
 					try {
 						String dneSqlQuery = "";
-						dneSqlQuery = "select if(ti.dne_date>CURDATE(),1,0) as dne, ti.id as id, ti.term from course_details cd, term_info ti where cd.term_id=ti.id and cd.id="
+						dneSqlQuery = "select if(ti.dne_date>CURDATE(),1,0) as dne, if(ti.registration_start<=CURDATE(),1,0) as regi_start, ti.id as id, ti.term from course_details cd, term_info ti where cd.term_id=ti.id and cd.id="
 								+ courseID;
 						PreparedStatement dne = conn.prepareStatement(dneSqlQuery);
 						ResultSet result1 = dne.executeQuery();
@@ -86,56 +82,97 @@ public class RegisterCourse extends HttpServlet {
 							dneValue = Integer.parseInt(result1.getString("dne"));
 							termValue = result1.getString("term");
 							termID = Integer.parseInt(result1.getString("id"));
+							regiStart = Integer.parseInt(result1.getString("regi_start"));
 							System.out.println("Dne:" + dneValue);
 						}
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-
+					if (regiStart>0) {
 					if (dneValue > 0) {
 						System.out.println("Checking Credit");
 						int totalCredit = 0;
+						int max_credit = 0;
+						int countcrs=0;
 						String term = null;
 
 						// checking no of total credit for the specific semester
 						try {
 							String creditSqlQuery = "";
-							creditSqlQuery += "select ti.term, cd.term_id, sum(cs.units) as sumCredit";
+							creditSqlQuery= "select ti.term, cd.term_id, ti.max_credit, (IFNULL(sum(cs.units),0)+ (select crs.units from course crs, course_details cds where cds.course_id=crs.id and cds.id=?)) as sumCredit";
 							creditSqlQuery += " from registration rgs, course_details cd, course cs, term_info ti";
-							creditSqlQuery += " where student_id=" + studentId + " AND";
+							creditSqlQuery += " where student_id=? AND";
 							creditSqlQuery += " cd.course_id=cs.id AND";
 							creditSqlQuery += " ti.id=cd.term_id and";
-							creditSqlQuery += " cd.id=rgs.course_details_id";
+							creditSqlQuery += " cd.id=rgs.course_details_id and ti.id=?";
 							creditSqlQuery += " group by cd.term_id";
 							// creditSqlQuery="select
 							// if(ti.dne_date>CURDATE(),1,0) as dne, ti.term
 							// from course_details cd, term_info ti where
 							// cd.term_id=ti.id and cd.id="+courseID;
 							PreparedStatement credit = conn.prepareStatement(creditSqlQuery);
+							credit.setInt(1, courseID);
+							credit.setInt(2, studentId);
+							credit.setInt(3, termID);
 							ResultSet result2 = credit.executeQuery();
 							while (result2.next()) {
-								term = result2.getString("term");
-								if (termValue == term) {
+								
 									totalCredit = Integer.parseInt(result2.getString("sumCredit"));
+									max_credit = Integer.parseInt(result2.getString("max_credit"));
 									System.out.println("Credit:" + totalCredit);
-								}
+								
 							}
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
+						
+						try {
+							String countCourse = "";
+							countCourse= "select COUNT(*) as countcourse from registration rgs, course_details cd "+
+										 "where rgs.student_id=? " +
+										 "AND rgs.course_details_id=cd.id "+
+										 "and cd.term_id=?";
+							// creditSqlQuery="select
+							// if(ti.dne_date>CURDATE(),1,0) as dne, ti.term
+							// from course_details cd, term_info ti where
+							// cd.term_id=ti.id and cd.id="+courseID;
+							PreparedStatement courseCount = conn.prepareStatement(countCourse);							
+							courseCount.setInt(1, studentId);
+							courseCount.setInt(2, termID);
+							ResultSet result2 = courseCount.executeQuery();
+							
+							while (result2.next()) {								
+									countcrs = result2.getInt("countcourse");									
+									System.out.println("Credit:" + totalCredit);
+								}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						
+						System.out.println("Total Course" + countcrs);
 						System.out.println("Total Credit" + totalCredit);
-						System.out.println(termValue.substring(0, 6));
-						if (termValue.substring(0, 6).equals("Summer") && totalCredit < 12) {
+						System.out.println("Max Credit" + max_credit);
+						//System.out.println(termValue.substring(0, 6));
+						//if (termValue.substring(0, 6).equals("Summer") && totalCredit < 12) {
+						if(totalCredit<=max_credit){
 							conflict = checkConflict(courseID, termID, studentId);
-							if (!conflict) {
-								//successMSG += "Done";
+							if (!conflict) {					
 								
 								CourseRegistration(courseID, studentId);
+								if(countcrs<1)
+								{									
+									AddDue(studentId, termID);									
+								}
 
 							} else {
 								successMSG= "Time Conflicts";
 							}
-						} else if (totalCredit < 12) {
+						} 
+						
+						else{
+							successMSG= "Course takn more than " +max_credit+" credits";
+						}
+						/*else if (totalCredit < 12) {
 							conflict = checkConflict(courseID, termID, studentId);
 							if (!conflict) {
 								
@@ -145,10 +182,13 @@ public class RegisterCourse extends HttpServlet {
 							} else {
 								successMSG= "Time Conflicts";
 							}
-						}
+						}*/
 					} else {
 						successMSG= "DNE date Over";
 					}
+				} else {
+					successMSG= "Registration Not Started";
+				}
 
 				}
 
@@ -287,5 +327,31 @@ public class RegisterCourse extends HttpServlet {
 			System.err.println(e.getMessage());
 		}
 		return successMSG;
+	}
+	
+	public void AddDue(int studentId, int tremId)
+	{		
+		try{		
+				
+		PreparedStatement addDue = conn.prepareStatement("insert into due(student_id,term_id, due_amount) values(?,?,?)");
+		addDue.setInt(1,studentId);
+		addDue.setInt(2,tremId); 
+		addDue.setInt(3,7000);
+		addDue.executeUpdate();
+		try{
+			if(null != addDue){
+				addDue.close();
+				System.out.println("Payment----1");
+			}
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}		
+	
+		}
+		catch(Exception e){
+			System.out.println("Something went wrong. Please contact system admin.");
+			System.err.println(e.getMessage());
+		}
 	}
 }
