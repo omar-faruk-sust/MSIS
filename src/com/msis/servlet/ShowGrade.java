@@ -91,6 +91,27 @@ public class ShowGrade extends HttpServlet {
 				" and cd.term_id="+termId+
 				" and grd.gpa = gp.points";
 		
+		/*String sql = "select cd.id, CONCAT( sbj.subject_code, '-', cs.course_code, ' ', cs.title ) AS course_title , ti.term, '' as gpa, '' as grade_scale,cs.units as unit "+
+			" from registration rg, grade gd , course cs, course_details cd, subject sbj,term_info ti "+
+			" where rg.student_id="+ studentId +
+			" and rg.course_details_id=cd.id"+
+			" and cd.course_id=cs.id"+
+			" and sbj.id=cs.subject_id"+
+			" and cd.term_id=ti.id"+
+			" and rg.course_details_id!=gd.course_id"+
+			" and cd.term_id="+termId+
+			" union"+
+			" select cd.id, CONCAT( sbj.subject_code, '-', cs.course_code, ' ', cs.title ) AS course_title , ti.term, gpa, gp.grade_scale as grade_scale, cs.units as unit"+
+			" from grade gd , course cs, course_details cd, subject sbj,term_info ti, grading_points gp"+
+			" where gd.student_id="+ studentId +
+			" and gd.course_id=cd.id"+
+			" and cd.course_id=cs.id"+
+			" and sbj.id=cs.subject_id"+
+			" and cd.term_id=ti.id"+
+			" and gd.gpa = gp.points"+
+			" and cd.term_id="+termId;*/
+		
+		System.out.println(sql);
 		String term_name = null;
 		String point;
 		PreparedStatement prepareStm;
@@ -109,16 +130,27 @@ public class ShowGrade extends HttpServlet {
 				ArrayList<String> row = new ArrayList<String>();
 				for (int i = 1; i <= 1 ; i++){
 			    	row.add(results.getString("course_title"));
-			    	row.add(results.getString("gpa"));
-			    	row.add(results.getString("grade_scale"));
+			    	if(!results.getString("gpa").equals("-1")){
+			    		row.add(results.getString("gpa"));
+			    	}
+			    	else{
+			    		row.add("-");
+			    	}
+			    	if(!results.getString("gpa").equals("-1")){
+			    		row.add(results.getString("grade_scale"));
+			    	}
+			    	else{
+			    		row.add("-");
+			    	}
+			    	
 			    	row.add(results.getString("unit"));
 			    	//row.add(results.getString("point"));
 			    	
-			    	if(!results.getString("gpa").equals("") && results.getString("grade_scale") != null){
+			    	if(!results.getString("gpa").equals("-1") && results.getString("grade_scale") != null){
 			    		point = (String.valueOf(Double.parseDouble(results.getString("gpa")) * Double.parseDouble(results.getString("unit"))));
 			    		row.add(point);
 			    	} else {
-			    		row.add("");
+			    		row.add("-");
 			    	}	
 			    }
 			    Rows.add(row);

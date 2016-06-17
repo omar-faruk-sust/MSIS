@@ -197,7 +197,7 @@
 												value="Confirm"
 												onclick="javascript: form.action='RegisterCourse';" /> <input
 												type="submit" style="margin-right: 10px"
-												class="btn btn-info pull-right" value="Delete"
+												class="btn btn-danger pull-right" value="Delete"
 												onclick="javascript: form.action='DeleteFromCart';" />
 														</c:when>
 														<c:otherwise>

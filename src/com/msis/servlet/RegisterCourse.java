@@ -44,9 +44,11 @@ public class RegisterCourse extends HttpServlet {
 
 		int amountDue = 0;
 		int dneValue = 0;
-		
+
+		String successMsg="";
 
 		
+		String errorMsg = "";
 		if (request.getParameterValues("courseList") != null) {
 			// Check DNE date
 			
@@ -179,7 +181,8 @@ public class RegisterCourse extends HttpServlet {
 							conflict = checkConflict(courseID, termID, studentId);
 							if (!conflict) {					
 								
-								CourseRegistration(courseID, studentId);
+								successMsg=CourseRegistration(courseID, studentId);
+								AddGrade(studentId, termID,courseID);
 								if(countcrs<1)
 								{									
 									AddDue(studentId, termID);									
@@ -222,6 +225,7 @@ public class RegisterCourse extends HttpServlet {
 		}
 
 		request.setAttribute("errorMsg", errorMsg);
+		request.setAttribute("successMsg", successMsg);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("courseCart.jsp");
 		requestDispatcher.forward(request, response);
 	}
@@ -365,6 +369,33 @@ public class RegisterCourse extends HttpServlet {
 			if(null != addDue){
 				addDue.close();
 				System.out.println("Payment----1");
+			}
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}		
+	
+		}
+		catch(Exception e){
+			System.out.println("Something went wrong. Please contact system admin.");
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	public void AddGrade(int studentId, int tremId, int course_id)
+	{		
+		try{		
+				
+		PreparedStatement addDue = conn.prepareStatement("insert into grade(student_id,term_id, course_id,gpa) values(?,?,?,?)");
+		addDue.setInt(1,studentId);
+		addDue.setInt(2,tremId); 
+		addDue.setInt(3,course_id);
+		addDue.setDouble(4,-1);
+		addDue.executeUpdate();
+		try{
+			if(null != addDue){
+				addDue.close();
+				System.out.println("Grade----1");
 			}
 		}
 		catch(SQLException e){

@@ -49,18 +49,38 @@ public class TranscriptModel {
 				for (int i = 1; i <= 1 ; i++){
 					row.add(results.getString("term"));
 			    	row.add(results.getString("course_title"));
-			    	row.add(results.getString("gpa"));
-			    	row.add(results.getString("grade_scale"));
+			    	if(!results.getString("gpa").equals("-1")){
+			    		row.add(results.getString("gpa"));
+			    	}
+			    	else{
+			    		row.add("");
+			    	}
+			    	if(!results.getString("gpa").equals("-1")){
+			    		row.add(results.getString("grade_scale"));
+			    	}
+			    	else{
+			    		row.add("");
+			    	}
+			    	//row.add(results.getString("gpa"));
+			    	//row.add(results.getString("grade_scale"));
 			    	row.add(results.getString("unit"));
-			    	if(!results.getString("gpa").equals("") && results.getString("grade_scale") != null){
+			    	
+			    	
+			    	
+			    	if(!results.getString("gpa").equals("-1") && results.getString("grade_scale") != null){
 			    		point = (String.valueOf(Double.parseDouble(results.getString("gpa")) * Double.parseDouble(results.getString("unit"))));
 			    		row.add(point);
 			    	} else {
 			    		row.add("");
 			    	}
-//			    	System.out.println(results.getString("unit"));
-//					System.out.println(results.getString("gpa"));
-//					System.out.println(results.getString("grade_scale"));
+			    	
+//			    	if(!results.getString("gpa").equals("") && results.getString("grade_scale") != null){
+//			    		point = (String.valueOf(Double.parseDouble(results.getString("gpa")) * Double.parseDouble(results.getString("unit"))));
+//			    		row.add(point);
+//			    	} else {
+//			    		row.add("");
+//			    	}
+			    	
 			    }
 				Rows.add(row);
 				

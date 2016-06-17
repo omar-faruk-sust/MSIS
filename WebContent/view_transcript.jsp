@@ -79,7 +79,6 @@
 										<c:set var="temp_term" value="${''}" />
 
 										<c:forEach items="${courseList}" var="courseInfo">
-
 											<tr role="row">
 												<c:forEach items="${courseInfo[0]}" var="term">
 													<c:choose>
@@ -106,7 +105,7 @@
 												</c:forEach>
 												<c:forEach items="${courseInfo[2]}" var="gpa">
 													<td>${gpa}</td>
-													<c:if test="${gpa!=''}">
+													<c:if test="${gpa!='0'}">
 														<c:set var="total_course_unit"
 															value="${total_course_unit+temp_unit}" />
 													</c:if>
@@ -127,9 +126,23 @@
 									<div class="panel-heading">
 										<h4 class="panel-title">Your Cumulative CGPA</h4>
 									</div>
+									
+									<c:if test="${total/total_course_unit != Double.NaN}">
 									<div class="panel-body">Your Cumulative CGPA for your
-
 										program is : ${total/total_course_unit}</div>
+									</c:if>
+									
+									<c:choose>
+										<c:when test="${total/total_course_unit != Double.NaN}">
+											<div class="panel-body">Your Cumulative CGPA for your
+											program is : ${total/total_course_unit}</div>
+										</c:when>
+										<c:otherwise>
+											<div class="panel-body">Your Cumulative CGPA for your
+										program is : -</div>
+										</c:otherwise>
+									</c:choose>
+										
 								</div>
 
 							</div>
