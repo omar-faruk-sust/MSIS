@@ -137,9 +137,17 @@ public class SearchCourse extends HttpServlet {
 				}
 				Rows.add(row);
 			}
+			if(Rows.size()<1)
+			{
+				request.setAttribute("errorMsg", "No Data Found. Please Try With Different Value");
+				RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/searchCourse.jsp");
+				requestDispatcher.forward(request, response);
+			}
+			else{
 			session.setAttribute("courseList", Rows);
 			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/courseList.jsp");
 			requestDispatcher.forward(request, response);
+			}
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please contact system admin.");
 			System.err.println(e.getMessage());

@@ -31,8 +31,8 @@
                 <li class="active">Search Course</li>
             </ol>         			
         </section> <!-- end of pre-header -->
-        <!-- Main content -->
-        <section class="content">
+       <!-- Main content -->
+			<section class="content">
         
         		<% 
          		ArrayList rows = new ArrayList();
@@ -41,12 +41,18 @@
          		}
          		%>
         
-        <div class="box">            
-            <div class="box-body">
-              <div class="dataTables_wrapper form-inline dt-bootstrap" id="example2_wrapper">	  
-                         
-              <div class="row">
-              <div class="col-sm-12">
+        
+				<div class="container-fluid">
+					<div class="row">
+						<div class="box col-xs-12">
+              				<div class="box-header">
+								<h3>
+									<a href="courseCart.jsp"
+										class="btn btn-primary btn-sm pull-right"><i
+										class="fa fa-pencil-square-o"></i>Course Cart</a>
+								</h3>
+							</div>
+              
               <!-- include the error messgae handler -->
 				<jsp:include page="error-success.jsp" />
 	              <c:forEach items="<%=rows %>" var="courseInfo">          

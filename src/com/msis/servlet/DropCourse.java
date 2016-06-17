@@ -22,6 +22,10 @@ public class DropCourse extends HttpServlet {
 	public DropCourse() {
 		// TODO Auto-generated constructor stub
 	}
+	String errorMsg = "";
+	String successMsg="";
+	MySQLAccess obj = new MySQLAccess();
+	Connection conn = obj.getConnection();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -33,8 +37,7 @@ public class DropCourse extends HttpServlet {
 		String successMSG = "";
 
 		try {
-			MySQLAccess obj = new MySQLAccess();
-			Connection conn = obj.getConnection();
+
 			String sqlQuery = "";
 			String delSqlQuery = "";
 			String eligible = "no";
@@ -48,7 +51,6 @@ public class DropCourse extends HttpServlet {
 				eligible = result1.getString("eligible");
 				session.setAttribute("termId", result1.getInt("id"));
 			}
-			
 
 			if (session.getAttribute("userType").equals("admin") || eligible.equals("yes")) {
 				delSqlQuery = "delete from registration where course_details_id=" + courseID + " and student_id="
@@ -56,16 +58,17 @@ public class DropCourse extends HttpServlet {
 
 				PreparedStatement courseDrop = conn.prepareStatement(delSqlQuery);
 				courseDrop.execute();
-				successMSG = "Successfully Dropped the Couse";
+				successMsg = "Successfully Dropped the Couse";
 			} else {
 				if (eligible.equals("no")) {
-					successMSG = "DNE Date is Over, You Cann't Drop. Please Contact With Admin";
+					errorMsg = "DNE Date is Over, You Cann't Drop. Please Contact With Admin";
 				} else {
-					successMSG = "Please Contact With Admin";
+					errorMsg = "Please Contact With Admin";
 				}
 			}
-
-			request.setAttribute("message", successMSG);
+			request.setAttribute("errorMsg", errorMsg);
+			request.setAttribute("successMsg", successMsg);
+			deleteCourseFromGrade(studentID,courseID);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("dropCourse.jsp");
 			requestDispatcher.forward(request, response);
 		} catch (SQLException e) {
@@ -79,6 +82,22 @@ public class DropCourse extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
+	}
+
+	public void deleteCourseFromGrade(int studentID, int courseID) {
+
+		try {
+			String delSqlQuery = "";
+			delSqlQuery = "delete from grade where course_id=" + courseID + " and student_id="
+					+ studentID;
+
+			PreparedStatement courseDelete = conn.prepareStatement(delSqlQuery);
+			courseDelete.execute();
+		} catch (SQLException e) {
+			System.out.println("Something went wrong. Please contact system admin.");
+			System.err.println(e.getMessage());
+		}
+
 	}
 
 }

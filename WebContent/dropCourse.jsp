@@ -8,33 +8,33 @@
 <%@ page import="com.msis.servlet.*"%>
 
 <%
-	String emailAtt = null; String userType = null;
-	if(session.getAttribute("email") == null || session.getAttribute("userType") == null){
+	String emailAtt = null;
+	String userType = null;
+	if (session.getAttribute("email") == null || session.getAttribute("userType") == null) {
 		response.sendRedirect("login.jsp");
-	}
-	else{
+	} else {
 %>
 
 <%
 	ArrayList rows = new ArrayList();
-	if (session.getAttribute("studentId") != null) {
-		int studentId = (Integer) session.getAttribute("studentId");
-		//if (session.getAttribute("courseCart") != null){
-		//rows = (ArrayList) session.getAttribute("courseCart");
-		TermInfoModel term = new TermInfoModel();
-		rows = term.termList(studentId);
-	} else {
-		TermInfoModel term = new TermInfoModel();
-		rows = term.termList();
-	}
-	ArrayList courseList = new ArrayList();
-	if (request.getAttribute("courseList") != null) {
-		courseList = (ArrayList) request.getAttribute("courseList");
-	} /*else if (session.getAttribute("studentId") != null && session.getAttribute("termId") != null && !session.getAttribute("userType").equals("admin")) {
-		CourseModel courseModel = new CourseModel();
-		courseList = courseModel.EnrollCourseList((Integer) session.getAttribute("studentId"),
-				(Integer) session.getAttribute("termId"));
-	}*/
+		if (session.getAttribute("studentId") != null) {
+			int studentId = (Integer) session.getAttribute("studentId");
+			//if (session.getAttribute("courseCart") != null){
+			//rows = (ArrayList) session.getAttribute("courseCart");
+			TermInfoModel term = new TermInfoModel();
+			rows = term.termList(studentId);
+		} else {
+			TermInfoModel term = new TermInfoModel();
+			rows = term.termList();
+		}
+		ArrayList courseList = new ArrayList();
+		if (request.getAttribute("courseList") != null) {
+			courseList = (ArrayList) request.getAttribute("courseList");
+		} /*else if (session.getAttribute("studentId") != null && session.getAttribute("termId") != null && !session.getAttribute("userType").equals("admin")) {
+			CourseModel courseModel = new CourseModel();
+			courseList = courseModel.EnrollCourseList((Integer) session.getAttribute("studentId"),
+					(Integer) session.getAttribute("termId"));
+			}*/
 %>
 
 <jsp:include page="pre-header.jsp" />
@@ -58,12 +58,11 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="box col-xs-12">
-							<p align="center" style="background: Yellow; font-size: 120%;">${message}</p>
 							<div class="box-header">
 								<h3></h3>
 							</div>
 							<div class="box-body">
-
+								<jsp:include page="error-success.jsp" />
 								<form method="POST" action="EnrolledCourse"
 									accept-charset="UTF-8" class="form-horizontal" role="form">
 
@@ -177,7 +176,8 @@
 														<td>${status}</td>
 													</c:forEach>
 													<form role="form" method="post" id="DropCourse"
-														action="DropCourse" onSubmit="if(!confirm('Are You Really Want To Drop The Course?')){return false;}">
+														action="DropCourse"
+														onSubmit="if(!confirm('Are You Really Want To Drop The Course?')){return false;}">
 
 														<c:forEach items="${courseInfo[0]}" var="courseID">
 															<input type="hidden" name="courseID" value="${courseID}">

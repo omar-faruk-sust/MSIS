@@ -61,7 +61,7 @@ public class CourseCart extends HttpServlet {
 					+ " cs.subject_id=sbj.id and" + " csch.schedule_id=sch.id AND" + " csch.course_detail_id=cd.id AND"
 					+ " rc.student_id=?";			
 			if (term > 0) {
-				sqlQuery +=" ti.id=?";
+				sqlQuery +=" and ti.id=?";
 			}			
 			sqlQuery +=" GROUP BY csch.course_detail_id";
 
@@ -91,7 +91,7 @@ public class CourseCart extends HttpServlet {
 			}
 			if(Rows.size()<1)
 			{
-				request.setAttribute("errorMsg", "Do Data Found. Please try again.");
+				request.setAttribute("errorMsg", "No Data Found. Please try again.");
 			}
 			request.setAttribute("courseList", Rows);
 			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/courseCart.jsp");
